@@ -39,7 +39,7 @@ The original practice set deliberately moves from basic numerical computation to
 | #   | Practice Problem                | Main Concepts                                       | Status       |
 | --- | ------------------------------- | --------------------------------------------------- | ------------ |
 | 1   | Create and inspect an array     | `np.array()`, `.ndim`, `.size`, `.dtype`, `.shape`  | ✅ Completed |
-| 2   | Array arithmetic                | Vectorized operations, percentage increase/decrease | ⬜ Pending   |
+| 2   | Array arithmetic                | Vectorized operations, percentage increase/decrease | ✅ Completed |
 | 3   | Filtering with Boolean indexing | Boolean masks, comparisons, `&`                     | ⬜ Pending   |
 | 4   | Replace values using conditions | `np.where()`                                        | ⬜ Pending   |
 | 5   | Basic statistics                | `sum`, `mean`, `min`, `max`, `std`, `median`        | ⬜ Pending   |
@@ -191,6 +191,97 @@ This first exercise establishes the basic pattern of **creating and inspecting N
 
 ---
 
+## 02 — Array Arithmetic
+
+**File:**
+
+```text
+02_array_arithmetic.py
+```
+
+### Problem
+
+Given:
+
+```python
+sales = np.array([100, 200, 300, 400, 500])
+```
+
+Calculate:
+
+- Sales after a **10% increase**
+- Sales after a **20% decrease**
+- Sales **multiplied by 2**
+- Use **vectorized operations rather than loops**
+
+### Concepts Practiced
+
+```text
+NumPy arrays
+Vectorized arithmetic
+Element-wise multiplication
+Percentage calculations
+```
+
+### Solution
+
+```python
+import numpy as np
+
+sales = np.array([100, 200, 300, 400, 500])
+
+increase_10_percent = sales + (sales * 0.1)
+decrease_20_percent = sales - (sales * 0.2)
+double_sales = sales * 2
+
+print(f"{increase_10_percent}\n{decrease_20_percent}\n{double_sales}")
+```
+
+### What This Solution Demonstrates
+
+The calculations are performed directly on the NumPy array without using a loop.
+
+For the **10% increase**:
+
+```python
+sales + (sales * 0.1)
+```
+
+This adds 10% of each original value back to the original sales.
+
+For the **20% decrease**:
+
+```python
+sales - (sales * 0.2)
+```
+
+This subtracts 20% of each original value from the original sales.
+
+For **doubling the sales**:
+
+```python
+sales * 2
+```
+
+NumPy applies these operations element-by-element across the entire array.
+
+### Expected Results
+
+```text
+10% increase:
+[110. 220. 330. 440. 550.]
+
+20% decrease:
+[ 80. 160. 240. 320. 400.]
+
+Sales multiplied by 2:
+[ 200  400  600  800 1000]
+```
+
+This exercise reinforces the idea of **vectorization**: performing an operation on an entire NumPy array instead of manually processing each element with a loop.
+
+---
+
 # 📁 Project Structure
 
 Current repository structure:
@@ -198,6 +289,7 @@ Current repository structure:
 ```text
 20_numPy__20_pandas_practice_questions/
 ├── 01_create__inspect_an_array.py
+├── 02_array_arithmetic.py
 └── README.md
 ```
 
@@ -224,11 +316,11 @@ The filenames above represent the intended progression; files should be added as
 
 | Section   | Questions | Completed | Remaining |
 | --------- | --------: | --------: | --------: |
-| NumPy     |      1–20 |         1 |        19 |
+| NumPy     |      1–20 |         2 |        18 |
 | Pandas    |     21–40 |         0 |        20 |
-| **Total** |  **1–40** |     **1** |    **39** |
+| **Total** |  **1–40** |     **2** |    **38** |
 
-**Overall progress: 1 / 40 completed (2.5%)**
+**Overall progress: 2 / 40 completed (5%)**
 
 ---
 
@@ -340,22 +432,21 @@ This repository tracks the implementation of those exercises as individual Pytho
 
 ## 🔄 Current Status
 
-**Next exercise:**
+**Current progress:**
 
 ```text
-02 — Array arithmetic
+01 — Create and inspect an array       ✅
+02 — Array arithmetic                  ✅
+03 — Filtering with Boolean indexing   ⬜ Next
 ```
 
-The next task is to practice NumPy vectorized operations using:
+### Next Exercise
 
-```python
-sales = np.array([100, 200, 300, 400, 500])
-```
+**03 — Filtering with Boolean indexing**
 
-The exercise requires calculating:
+The next task will practice:
 
-- Sales after a 10% increase
-- Sales after a 20% decrease
-- Sales multiplied by 2
-
-using **vectorized NumPy operations rather than loops**.
+- Boolean masks
+- Comparisons
+- `&`
+- Filtering NumPy arrays based on conditions
