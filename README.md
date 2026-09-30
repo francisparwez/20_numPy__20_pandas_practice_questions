@@ -42,7 +42,7 @@ The original practice set deliberately moves from basic numerical computation to
 | 2   | Array arithmetic                | Vectorized operations, percentage increase/decrease | ✅ Completed |
 | 3   | Filtering with Boolean indexing | Boolean masks, comparisons, `&`                     | ✅ Completed |
 | 4   | Replace values using conditions | `np.where()`                                        | ✅ Completed |
-| 5   | Basic statistics                | `sum`, `mean`, `min`, `max`, `std`, `median`        | ⬜ Pending   |
+| 5   | Basic statistics                | `sum`, `mean`, `min`, `max`, `std`, `median`        | ✅ Completed |
 
 ### Level N2 — NumPy
 
@@ -455,6 +455,100 @@ After also replacing scores above 80:
 
 This exercise reinforces **conditional value replacement with `np.where()`**, an important NumPy technique for transforming data based on rules.
 
+## 05 — Basic Statistics
+
+**File:**
+
+```text
+05_basic_statistics.py
+```
+
+### Problem
+
+Given:
+
+```python
+sales = np.array([120, 150, 200, 180, 300, 250, 170])
+```
+
+Calculate:
+
+- Total
+- Mean
+- Minimum
+- Maximum
+- Standard deviation
+- Median
+
+### Concepts Practiced
+
+```text
+sum()
+mean()
+min()
+max()
+std()
+median()
+```
+
+### Solution
+
+```python
+import numpy as np
+
+sales = np.array([120, 150, 200, 180, 300, 250, 170])
+
+sales_total = np.sum(sales)
+sales_mean = np.mean(sales)
+sales_min = np.min(sales)
+sales_max = np.max(sales)
+sales_std = np.std(sales)
+sales_median = np.median(sales)
+
+print(sales_total)
+print(sales_min)
+print(sales_max)
+print(sales_std)
+print(sales_median)
+```
+
+### What This Solution Demonstrates
+
+The solution uses NumPy's built-in statistical functions to calculate common descriptive statistics from the sales array.
+
+- `np.sum()` calculates the total of all sales values.
+- `np.mean()` calculates the arithmetic mean.
+- `np.min()` finds the smallest value.
+- `np.max()` finds the largest value.
+- `np.std()` calculates the standard deviation.
+- `np.median()` finds the middle value after ordering the data.
+
+The solution focuses on applying NumPy's statistical functions directly to the array.
+
+### Expected Results
+
+```text
+Total:
+1370
+
+Mean:
+195.71428571428572
+
+Minimum:
+120
+
+Maximum:
+300
+
+Standard deviation:
+55.636...
+
+Median:
+180.0
+```
+
+This exercise reinforces **basic descriptive statistics with NumPy**, which are fundamental for exploratory data analysis.
+
 # 📁 Project Structure
 
 Current repository structure:
@@ -464,6 +558,8 @@ Current repository structure:
 ├── 01_create__inspect_an_array.py
 ├── 02_array_arithmetic.py
 ├── 03_filtering_with_boolean_indexing.py
+├── 04_replace_values_using_conditions.py
+├── 05_basic_statistics.py
 └── README.md
 ```
 
@@ -491,11 +587,11 @@ The filenames above represent the intended progression; files should be added as
 
 | Section   | Questions | Completed | Remaining |
 | --------- | --------: | --------: | --------: |
-| NumPy     |      1–20 |         4 |        16 |
+| NumPy     |      1–20 |         5 |        15 |
 | Pandas    |     21–40 |         0 |        20 |
-| **Total** |  **1–40** |     **4** |    **36** |
+| **Total** |  **1–40** |     **5** |    **35** |
 
-**Overall progress: 4 / 40 completed (10%)**
+**Overall progress: 5 / 40 completed (12.5%)**
 
 ---
 
@@ -614,16 +710,15 @@ This repository tracks the implementation of those exercises as individual Pytho
 02 — Array arithmetic                  ✅
 03 — Filtering with Boolean indexing   ✅
 04 — Replace values using conditions   ✅
+05 — Basic statistics                  ✅
 ```
 
 ### Next Exercise
 
-**05 — Basic statistics**
+**06 — Reshape data**
 
 The next task will practice:
 
-- `sum()`
-- `mean()`
-- `min()` and `max()`
-- `std()`
-- `median()`
+- `.reshape()`
+- Reshaping NumPy arrays
+- Changing array dimensions
