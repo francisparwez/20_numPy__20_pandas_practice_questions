@@ -40,7 +40,7 @@ The original practice set deliberately moves from basic numerical computation to
 | --- | ------------------------------- | --------------------------------------------------- | ------------ |
 | 1   | Create and inspect an array     | `np.array()`, `.ndim`, `.size`, `.dtype`, `.shape`  | ✅ Completed |
 | 2   | Array arithmetic                | Vectorized operations, percentage increase/decrease | ✅ Completed |
-| 3   | Filtering with Boolean indexing | Boolean masks, comparisons, `&`                     | ⬜ Pending   |
+| 3   | Filtering with Boolean indexing | Boolean masks, comparisons, `&`                     | ✅ Completed |
 | 4   | Replace values using conditions | `np.where()`                                        | ⬜ Pending   |
 | 5   | Basic statistics                | `sum`, `mean`, `min`, `max`, `std`, `median`        | ⬜ Pending   |
 
@@ -282,6 +282,96 @@ This exercise reinforces the idea of **vectorization**: performing an operation 
 
 ---
 
+## 03 — Filtering with Boolean Indexing
+
+**File:**
+
+```text
+03_filtering_with_boolean_indexing.py
+```
+
+### Problem
+
+Given:
+
+```python
+sales = np.array([120, 450, 230, 890, 340, 150, 720])
+```
+
+Return:
+
+- Sales greater than 400
+- Sales less than 300
+- Sales between 200 and 700
+
+### Concepts Practiced
+
+```text
+Boolean masks
+Comparisons
+&
+Boolean indexing
+```
+
+### Solution
+
+```python
+import numpy as np
+
+sales = np.array([120, 450, 230, 890, 340, 150, 720])
+
+sales_greater_than_400 = sales[sales > 400]
+sales_less_than_300 = sales[sales < 300]
+sales_between_200__700 = sales[(sales >= 200) & (sales <= 700)]
+
+print(sales_greater_than_400)
+print(sales_less_than_300)
+print(sales_between_200__700)
+```
+
+### What This Solution Demonstrates
+
+The solution uses **Boolean indexing** to filter elements from a NumPy array based on conditions.
+
+For sales greater than 400:
+
+```python
+sales[sales > 400]
+```
+
+NumPy creates a Boolean mask where each element is checked against the condition `sales > 400`, then returns only the values where the condition is `True`.
+
+For sales less than 300:
+
+```python
+sales[sales < 300]
+```
+
+This returns only the values that satisfy the condition.
+
+For values between 200 and 700:
+
+```python
+sales[(sales >= 200) & (sales <= 700)]
+```
+
+Two conditions are combined using `&` (**AND**). A value is included only when it is both greater than or equal to 200 and less than or equal to 700.
+
+### Expected Results
+
+```text
+Sales greater than 400:
+[450 890 720]
+
+Sales less than 300:
+[120 230 150]
+
+Sales between 200 and 700:
+[450 230 340]
+```
+
+This exercise reinforces **Boolean masks and conditional filtering**, which are fundamental techniques for working with NumPy arrays and later with Pandas DataFrames.
+
 # 📁 Project Structure
 
 Current repository structure:
@@ -290,6 +380,7 @@ Current repository structure:
 20_numPy__20_pandas_practice_questions/
 ├── 01_create__inspect_an_array.py
 ├── 02_array_arithmetic.py
+├── 03_filtering_with_boolean_indexing.py
 └── README.md
 ```
 
@@ -316,11 +407,11 @@ The filenames above represent the intended progression; files should be added as
 
 | Section   | Questions | Completed | Remaining |
 | --------- | --------: | --------: | --------: |
-| NumPy     |      1–20 |         2 |        18 |
+| NumPy     |      1–20 |         3 |        17 |
 | Pandas    |     21–40 |         0 |        20 |
-| **Total** |  **1–40** |     **2** |    **38** |
+| **Total** |  **1–40** |     **3** |    **37** |
 
-**Overall progress: 2 / 40 completed (5%)**
+**Overall progress: 3 / 40 completed (7.5%)**
 
 ---
 
@@ -437,16 +528,15 @@ This repository tracks the implementation of those exercises as individual Pytho
 ```text
 01 — Create and inspect an array       ✅
 02 — Array arithmetic                  ✅
-03 — Filtering with Boolean indexing   ⬜ Next
+03 — Filtering with Boolean indexing   ✅
 ```
 
 ### Next Exercise
 
-**03 — Filtering with Boolean indexing**
+**04 — Replace values using conditions**
 
 The next task will practice:
 
-- Boolean masks
-- Comparisons
-- `&`
-- Filtering NumPy arrays based on conditions
+- `np.where()`
+- Conditional value replacement
+- Applying conditions to NumPy arrays
