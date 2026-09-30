@@ -41,7 +41,7 @@ The original practice set deliberately moves from basic numerical computation to
 | 1   | Create and inspect an array     | `np.array()`, `.ndim`, `.size`, `.dtype`, `.shape`  | ✅ Completed |
 | 2   | Array arithmetic                | Vectorized operations, percentage increase/decrease | ✅ Completed |
 | 3   | Filtering with Boolean indexing | Boolean masks, comparisons, `&`                     | ✅ Completed |
-| 4   | Replace values using conditions | `np.where()`                                        | ⬜ Pending   |
+| 4   | Replace values using conditions | `np.where()`                                        | ✅ Completed |
 | 5   | Basic statistics                | `sum`, `mean`, `min`, `max`, `std`, `median`        | ⬜ Pending   |
 
 ### Level N2 — NumPy
@@ -372,6 +372,89 @@ Sales between 200 and 700:
 
 This exercise reinforces **Boolean masks and conditional filtering**, which are fundamental techniques for working with NumPy arrays and later with Pandas DataFrames.
 
+---
+
+## 04 — Replace Values Using Conditions
+
+**File:**
+
+```text
+04_replace_values_using_conditions.py
+```
+
+### Problem
+
+Given:
+
+```python
+scores = np.array([45, 67, 82, 34, 91, 55, 73])
+```
+
+Replace:
+
+- Scores below **50** with `0`
+- Scores above **80** with `100`
+
+### Concepts Practiced
+
+```text
+np.where()
+Conditional value replacement
+Applying conditions to NumPy arrays
+```
+
+### Solution
+
+```python
+import numpy as np
+
+scores = np.array([45, 67, 82, 34, 91, 55, 73])
+
+scores = np.where(scores < 50, 0, scores)
+print(scores)
+
+scores = np.where(scores > 80, 100, scores)
+print(scores)
+```
+
+### What This Solution Demonstrates
+
+The solution uses `np.where()` to replace values in a NumPy array when a condition is satisfied.
+
+For scores below 50:
+
+```python
+scores = np.where(scores < 50, 0, scores)
+```
+
+Any score below 50 is replaced with `0`. Values that do not satisfy the condition remain unchanged.
+
+For scores above 80:
+
+```python
+scores = np.where(scores > 80, 100, scores)
+```
+
+Any score above 80 is replaced with `100`. Other values remain unchanged.
+
+The two conditions are applied sequentially to the same array.
+
+### Expected Results
+
+After replacing scores below 50:
+
+```text
+[ 0 67 82  0 91 55 73]
+```
+
+After also replacing scores above 80:
+
+```text
+[  0  67 100   0 100  55  73]
+```
+
+This exercise reinforces **conditional value replacement with `np.where()`**, an important NumPy technique for transforming data based on rules.
+
 # 📁 Project Structure
 
 Current repository structure:
@@ -391,6 +474,7 @@ As additional questions are completed, each solution will be added as a separate
 ├── 01_create__inspect_an_array.py
 ├── 02_array_arithmetic.py
 ├── 03_filtering_with_boolean_indexing.py
+├── 04_replace_values_using_conditions.py
 ├── ...
 ├── 20_numpy_mini_data_analysis_challenge.py
 ├── 21_create_a_dataframe.py
@@ -407,11 +491,11 @@ The filenames above represent the intended progression; files should be added as
 
 | Section   | Questions | Completed | Remaining |
 | --------- | --------: | --------: | --------: |
-| NumPy     |      1–20 |         3 |        17 |
+| NumPy     |      1–20 |         4 |        16 |
 | Pandas    |     21–40 |         0 |        20 |
-| **Total** |  **1–40** |     **3** |    **37** |
+| **Total** |  **1–40** |     **4** |    **36** |
 
-**Overall progress: 3 / 40 completed (7.5%)**
+**Overall progress: 4 / 40 completed (10%)**
 
 ---
 
@@ -529,14 +613,17 @@ This repository tracks the implementation of those exercises as individual Pytho
 01 — Create and inspect an array       ✅
 02 — Array arithmetic                  ✅
 03 — Filtering with Boolean indexing   ✅
+04 — Replace values using conditions   ✅
 ```
 
 ### Next Exercise
 
-**04 — Replace values using conditions**
+**05 — Basic statistics**
 
 The next task will practice:
 
-- `np.where()`
-- Conditional value replacement
-- Applying conditions to NumPy arrays
+- `sum()`
+- `mean()`
+- `min()` and `max()`
+- `std()`
+- `median()`
