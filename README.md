@@ -49,7 +49,7 @@ The original practice set deliberately moves from basic numerical computation to
 | #   | Practice Problem                 | Main Concepts                     | Status       |
 | --- | -------------------------------- | --------------------------------- | ------------ |
 | 6   | Reshape data                     | `.reshape()`                      | ✅ Completed |
-| 7   | Row and column operations        | `axis`                            | ⬜ Pending   |
+| 7   | Row and column operations        | `axis`                            | ✅ Completed |
 | 8   | Find indexes of important values | `argmax()`, `argmin()`, `where()` | ⬜ Pending   |
 | 9   | Sort an array                    | `sort()`, `argsort()`             | ⬜ Pending   |
 | 10  | Remove duplicates                | `np.unique()`                     | ⬜ Pending   |
@@ -626,6 +626,98 @@ This exercise reinforces array reshaping and dimensional thinking.
 
 ---
 
+## 07 — Row and Column Operations
+
+**File:**
+
+```text
+07_row__column_operation.py
+```
+
+### Problem
+
+Given:
+
+```python
+sales = np.array([
+    [100, 200, 300],
+    [150, 250, 350],
+    [200, 300, 400]
+])
+```
+
+Calculate:
+
+- Total sales for each row
+- Total sales for each column
+- Average sales for each row
+- Average sales for each column
+
+**Important concept:** `axis`
+
+### Concepts Practiced
+
+```text
+np.sum()
+np.mean()
+axis=0
+axis=1
+Row operations
+Column operations
+```
+
+### Solution
+
+```python
+# 7. Row and column operations
+# Given:
+#     sales = np.array([
+#     [100, 200, 300],
+#     [150, 250, 350],
+#     [200, 300, 400]
+#     ])
+# Calculate:
+#     Total sales for each row
+#     Total sales for each column
+#     Average sales for each row
+#     Average sales for each column
+# Important concept: axis
+
+import numpy as np
+
+sales = np.array([
+    [100, 200, 300],
+    [150, 250, 350],
+    [200, 300, 400]
+])
+
+print(f"Total sales for each row: {np.sum(sales, axis=1)}")
+print(f"Total sales for each column: {np.sum(sales, axis=0)}")
+print(f"Average sales for each row: {np.mean(sales, axis=1)}")
+print(f"Average sales for each column: {np.mean(sales, axis=0)}")
+```
+
+### What This Solution Demonstrates
+
+The solution uses NumPy's `axis` parameter to perform calculations across rows and columns.
+
+For row-wise calculations, `axis=1` calculates across each row and produces one result for every row. For column-wise calculations, `axis=0` calculates down each column and produces one result for every column.
+
+The same `axis` concept is used with both `np.sum()` and `np.mean()`.
+
+### Expected Results
+
+```text
+Total sales for each row: [600 750 900]
+Total sales for each column: [450 750 1050]
+Average sales for each row: [200. 250. 300.]
+Average sales for each column: [150. 250. 350.]
+```
+
+This exercise reinforces the important NumPy concept of **`axis`**, which is essential when performing calculations on multidimensional arrays.
+
+---
+
 # 📁 Project Structure
 
 Current repository structure:
@@ -638,6 +730,7 @@ Current repository structure:
 ├── 04_replace_values_using_conditions.py
 ├── 05_basic_statistics.py
 ├── 06_reshape_data.py
+├── 07_row__column_operation.py
 └── README.md
 ```
 
@@ -665,11 +758,11 @@ The filenames above represent the intended progression; files should be added as
 
 | Section   | Questions | Completed | Remaining |
 | --------- | --------: | --------: | --------: |
-| NumPy     |      1–20 |         6 |        14 |
+| NumPy     |      1–20 |         7 |        13 |
 | Pandas    |     21–40 |         0 |        20 |
-| **Total** |  **1–40** |     **6** |    **34** |
+| **Total** |  **1–40** |     **7** |    **33** |
 
-**Overall progress: 6 / 40 completed (15%)**
+**Overall progress: 7 / 40 completed (17.5%)**
 
 ---
 
@@ -790,15 +883,16 @@ This repository tracks the implementation of those exercises as individual Pytho
 04 — Replace values using conditions   ✅
 05 — Basic statistics                  ✅
 06 — Reshape data                      ✅
+07 — Row and column operations         ✅
 ```
 
 ### Next Exercise
 
-**07 — Row and column operations**
+**08 — Find indexes of important values**
 
 The next task will practice:
 
-- `axis`
-- Row operations
-- Column operations
-- Understanding how `axis` affects NumPy calculations
+- `argmax()`
+- `argmin()`
+- `where()`
+- Finding indexes of important values
