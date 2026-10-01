@@ -46,13 +46,13 @@ The original practice set deliberately moves from basic numerical computation to
 
 ### Level N2 — NumPy
 
-| #   | Practice Problem                 | Main Concepts                     | Status     |
-| --- | -------------------------------- | --------------------------------- | ---------- |
-| 6   | Reshape data                     | `.reshape()`                      | ⬜ Pending |
-| 7   | Row and column operations        | `axis`                            | ⬜ Pending |
-| 8   | Find indexes of important values | `argmax()`, `argmin()`, `where()` | ⬜ Pending |
-| 9   | Sort an array                    | `sort()`, `argsort()`             | ⬜ Pending |
-| 10  | Remove duplicates                | `np.unique()`                     | ⬜ Pending |
+| #   | Practice Problem                 | Main Concepts                     | Status       |
+| --- | -------------------------------- | --------------------------------- | ------------ |
+| 6   | Reshape data                     | `.reshape()`                      | ✅ Completed |
+| 7   | Row and column operations        | `axis`                            | ⬜ Pending   |
+| 8   | Find indexes of important values | `argmax()`, `argmin()`, `where()` | ⬜ Pending   |
+| 9   | Sort an array                    | `sort()`, `argsort()`             | ⬜ Pending   |
+| 10  | Remove duplicates                | `np.unique()`                     | ⬜ Pending   |
 
 ### Level N3 — NumPy Data Analysis
 
@@ -549,6 +549,83 @@ Median:
 
 This exercise reinforces **basic descriptive statistics with NumPy**, which are fundamental for exploratory data analysis.
 
+## 06 — Reshape Data
+
+**File:**
+
+```text
+06_reshape_data.py
+```
+
+### Problem
+
+Given:
+
+```python
+values = np.arange(1, 13)
+```
+
+Convert it into **4 rows × 3 columns**, then into **3 rows × 4 columns**.
+
+### Concepts Practiced
+
+```text
+np.arange()
+np.reshape()
+Array dimensions
+```
+
+### Solution
+
+```python
+# NumPy — Level N2
+# 6. Reshape data
+# Given:
+#     values = np.arange(1, 13)
+# Convert it into:
+#     4 rows × 3 columns
+# Then convert it into:
+#     3 rows × 4 columns
+# Concepts: reshape() .
+
+import numpy as np
+
+values = np.arange(1, 13)
+print("Original 1D array:\n", values)
+
+shape_4x3 = np.reshape(values, (4, 3))
+print("\nReshaped to 4x3:\n", shape_4x3)
+
+shape_3x4 = np.reshape(values, (3, 4))
+print("\nReshaped to 3x4:\n", shape_3x4)
+```
+
+### What This Solution Demonstrates
+
+The solution creates a 1D NumPy array containing 1 through 12, then reshapes the same 12 elements into two different two-dimensional structures. `np.reshape(values, (4, 3))` creates a 4 × 3 array, while `np.reshape(values, (3, 4))` creates a 3 × 4 array. The values remain the same; only their arrangement changes.
+
+### Expected Results
+
+```text
+Original 1D array:
+[ 1  2  3  4  5  6  7  8  9 10 11 12]
+
+Reshaped to 4x3:
+[[ 1  2  3]
+ [ 4  5  6]
+ [ 7  8  9]
+ [10 11 12]]
+
+Reshaped to 3x4:
+[[ 1  2  3  4]
+ [ 5  6  7  8]
+ [ 9 10 11 12]]
+```
+
+This exercise reinforces array reshaping and dimensional thinking.
+
+---
+
 # 📁 Project Structure
 
 Current repository structure:
@@ -560,6 +637,7 @@ Current repository structure:
 ├── 03_filtering_with_boolean_indexing.py
 ├── 04_replace_values_using_conditions.py
 ├── 05_basic_statistics.py
+├── 06_reshape_data.py
 └── README.md
 ```
 
@@ -587,11 +665,11 @@ The filenames above represent the intended progression; files should be added as
 
 | Section   | Questions | Completed | Remaining |
 | --------- | --------: | --------: | --------: |
-| NumPy     |      1–20 |         5 |        15 |
+| NumPy     |      1–20 |         6 |        14 |
 | Pandas    |     21–40 |         0 |        20 |
-| **Total** |  **1–40** |     **5** |    **35** |
+| **Total** |  **1–40** |     **6** |    **34** |
 
-**Overall progress: 5 / 40 completed (12.5%)**
+**Overall progress: 6 / 40 completed (15%)**
 
 ---
 
@@ -711,14 +789,16 @@ This repository tracks the implementation of those exercises as individual Pytho
 03 — Filtering with Boolean indexing   ✅
 04 — Replace values using conditions   ✅
 05 — Basic statistics                  ✅
+06 — Reshape data                      ✅
 ```
 
 ### Next Exercise
 
-**06 — Reshape data**
+**07 — Row and column operations**
 
 The next task will practice:
 
-- `.reshape()`
-- Reshaping NumPy arrays
-- Changing array dimensions
+- `axis`
+- Row operations
+- Column operations
+- Understanding how `axis` affects NumPy calculations
