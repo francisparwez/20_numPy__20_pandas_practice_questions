@@ -50,7 +50,7 @@ The original practice set deliberately moves from basic numerical computation to
 | --- | -------------------------------- | --------------------------------- | ------------ |
 | 6   | Reshape data                     | `.reshape()`                      | ✅ Completed |
 | 7   | Row and column operations        | `axis`                            | ✅ Completed |
-| 8   | Find indexes of important values | `argmax()`, `argmin()`, `where()` | ⬜ Pending   |
+| 8   | Find indexes of important values | `argmax()`, `argmin()`, `where()` | ✅ Completed |
 | 9   | Sort an array                    | `sort()`, `argsort()`             | ⬜ Pending   |
 | 10  | Remove duplicates                | `np.unique()`                     | ⬜ Pending   |
 
@@ -718,6 +718,77 @@ This exercise reinforces the important NumPy concept of **`axis`**, which is ess
 
 ---
 
+## 08 — Find Indexes of Important Values
+
+**File:**
+
+```text
+08_find_indexes_of_important_values.py
+```
+
+### Problem
+
+Given:
+
+```python
+sales = np.array([120, 450, 230, 890, 340, 720])
+```
+
+Find:
+
+- Index of the maximum value
+- Index of the minimum value
+- Indexes where sales are greater than 400
+
+### Concepts Practiced
+
+```text
+np.argmax()
+np.argmin()
+np.where()
+Finding indexes
+```
+
+### Solution
+
+```python
+import numpy as np
+
+sales = np.array([120, 450, 230, 890, 340, 720])
+
+print(f"Index of the maximum value: {np.argmax(sales)}")
+print(f"Index of the minimum value: {np.argmin(sales)}")
+print(f"Indexes where sales are greater than 400: {np.where(sales > 400)}")
+```
+
+### What This Solution Demonstrates
+
+The solution uses NumPy index-finding functions to locate important values in the sales array.
+
+- `np.argmax()` returns the index of the maximum value.
+- `np.argmin()` returns the index of the minimum value.
+- `np.where()` returns the indexes where a condition is `True`.
+
+For this array:
+
+```text
+Maximum value: 890 → index 3
+Minimum value: 120 → index 0
+Sales greater than 400 → indexes [1, 3, 5]
+```
+
+### Expected Results
+
+```text
+Index of the maximum value: 3
+Index of the minimum value: 0
+Indexes where sales are greater than 400: (array([1, 3, 5]),)
+```
+
+This exercise reinforces the difference between **finding values** and **finding their positions (indexes)**, which is useful when analyzing NumPy arrays.
+
+---
+
 # 📁 Project Structure
 
 Current repository structure:
@@ -731,6 +802,7 @@ Current repository structure:
 ├── 05_basic_statistics.py
 ├── 06_reshape_data.py
 ├── 07_row__column_operation.py
+├── 08_find_indexes_of_important_values.py
 └── README.md
 ```
 
@@ -758,11 +830,11 @@ The filenames above represent the intended progression; files should be added as
 
 | Section   | Questions | Completed | Remaining |
 | --------- | --------: | --------: | --------: |
-| NumPy     |      1–20 |         7 |        13 |
+| NumPy     |      1–20 |         8 |        12 |
 | Pandas    |     21–40 |         0 |        20 |
-| **Total** |  **1–40** |     **7** |    **33** |
+| **Total** |  **1–40** |     **8** |    **32** |
 
-**Overall progress: 7 / 40 completed (17.5%)**
+**Overall progress: 8 / 40 completed (20%)**
 
 ---
 
@@ -884,15 +956,16 @@ This repository tracks the implementation of those exercises as individual Pytho
 05 — Basic statistics                  ✅
 06 — Reshape data                      ✅
 07 — Row and column operations         ✅
+08 — Find indexes of important values   ✅
 ```
 
 ### Next Exercise
 
-**08 — Find indexes of important values**
+**09 — Sort an array**
 
 The next task will practice:
 
-- `argmax()`
-- `argmin()`
-- `where()`
-- Finding indexes of important values
+- `sort()`
+- `argsort()`
+- Sorting values
+- Finding the indexes that would sort an array
