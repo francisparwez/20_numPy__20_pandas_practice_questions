@@ -52,7 +52,7 @@ The original practice set deliberately moves from basic numerical computation to
 | 7   | Row and column operations        | `axis`                            | ✅ Completed |
 | 8   | Find indexes of important values | `argmax()`, `argmin()`, `where()` | ✅ Completed |
 | 9   | Sort an array                    | `sort()`, `argsort()`             | ✅ Completed |
-| 10  | Remove duplicates                | `np.unique()`                     | ⬜ Pending   |
+| 10  | Remove duplicates                | `np.unique()`                     | ✅ Completed |
 
 ### Level N3 — NumPy Data Analysis
 
@@ -789,6 +789,8 @@ This exercise reinforces the difference between **finding values** and **finding
 
 ---
 
+---
+
 ## 09 — Sort an Array
 
 **File:**
@@ -807,19 +809,18 @@ values = np.array([45, 12, 89, 23, 67, 34])
 
 Create:
 
-- Ascending version
-- Descending version
-- Indexes that would sort the original array in ascending order
-- Indexes that would sort the original array in descending order
+- An ascending version
+- A descending version
+- The indexes that would sort the original array
 
 ### Concepts Practiced
 
 ```text
 np.sort()
 np.argsort()
-Array slicing [::-1]
+Array slicing with [::-1]
 Sorting values
-Sorting indexes
+Finding sorting indexes
 ```
 
 ### Solution
@@ -838,62 +839,83 @@ print(f"Sort Indexes (Descending): {np.argsort(values)[::-1]}")
 
 ### What This Solution Demonstrates
 
-The solution uses `np.sort()` to return a sorted copy of the array without changing the original `values` array.
+The solution uses NumPy sorting functions to sort values and identify the indexes that would produce the sorted order.
 
-For ascending order:
-
-```python
-np.sort(values)
-```
-
-returns the values from smallest to largest.
-
-For descending order:
-
-```python
-np.sort(values)[::-1]
-```
-
-first sorts the array in ascending order and then reverses it using `[::-1]`.
-
-The solution also uses `np.argsort()` to return the indexes that would sort the original array.
-
-```python
-np.argsort(values)
-```
-
-returns the indexes in ascending-value order.
-
-Reversing those indexes with:
-
-```python
-np.argsort(values)[::-1]
-```
-
-produces the indexes in descending-value order.
+- `np.sort()` returns a sorted copy of the array.
+- `[::-1]` reverses the sorted array to produce descending order.
+- `np.argsort()` returns the indexes that would sort the array.
+- Reversing `np.argsort()` produces the descending sort indexes.
 
 ### Expected Results
 
 ```text
-Original:
-[45 12 89 23 67 34]
-
-Ascending:
-[12 23 34 45 67 89]
-
-Descending:
-[89 67 45 34 23 12]
-
-Sort Indexes (Ascending):
-[1 3 5 0 4 2]
-
-Sort Indexes (Descending):
-[2 4 0 5 3 1]
+Original: [45 12 89 23 67 34]
+Ascending: [12 23 34 45 67 89]
+Descending: [89 67 45 34 23 12]
+Sort Indexes (Ascending): [1 3 5 0 4 2]
+Sort Indexes (Descending): [2 4 0 5 3 1]
 ```
 
-This exercise reinforces the difference between **sorting values** with `sort()` and **finding the positions that produce the sorted order** with `argsort()`.
+This exercise reinforces the difference between **sorting values** and **finding the positions that define the sorted order**.
 
 ---
+
+## 10 — Remove Duplicates
+
+**File:**
+
+```text
+10_remove_duplicates.py
+```
+
+### Problem
+
+Given:
+
+```python
+customer_ids = np.array([101, 102, 101, 103, 104, 102, 105, 103])
+```
+
+Return only the unique customer IDs and determine how many unique customers exist.
+
+### Concepts Practiced
+
+```text
+np.unique()
+Finding unique values
+Counting unique values
+```
+
+### Solution
+
+```python
+import numpy as np
+
+customer_ids = np.array([101, 102, 101, 103, 104, 102, 105, 103])
+
+print(f"Original Customer ID: {customer_ids}")
+
+unique_customer_ids = np.unique(customer_ids)
+
+print(f"Unique Customer ID: {unique_customer_ids}")
+print(f"Number of Unique Customers: {len(unique_customer_ids)}")
+```
+
+### What This Solution Demonstrates
+
+The solution uses `np.unique()` to remove duplicate customer IDs and return each customer ID only once.
+
+The resulting unique array is then reused to calculate the number of unique customers with `len()`.
+
+### Expected Results
+
+```text
+Original Customer ID: [101 102 101 103 104 102 105 103]
+Unique Customer ID: [101 102 103 104 105]
+Number of Unique Customers: 5
+```
+
+This exercise reinforces a common data-analysis task: identifying distinct entities in a dataset and determining how many unique entities are present.
 
 # 📁 Project Structure
 
@@ -910,6 +932,7 @@ Current repository structure:
 ├── 07_row__column_operation.py
 ├── 08_find_indexes_of_important_values.py
 ├── 09_sort_an_array.py
+├── 10_remove_duplicates.py
 └── README.md
 ```
 
@@ -937,11 +960,11 @@ The filenames above represent the intended progression; files should be added as
 
 | Section   | Questions | Completed | Remaining |
 | --------- | --------: | --------: | --------: |
-| NumPy     |      1–20 |         9 |        11 |
+| NumPy     |      1–20 |        10 |        10 |
 | Pandas    |     21–40 |         0 |        20 |
-| **Total** |  **1–40** |     **9** |    **31** |
+| **Total** |  **1–40** |    **10** |    **30** |
 
-**Overall progress: 9 / 40 completed (22.5%)**
+**Overall progress: 10 / 40 completed (25%)**
 
 ---
 
@@ -1063,16 +1086,17 @@ This repository tracks the implementation of those exercises as individual Pytho
 05 — Basic statistics                  ✅
 06 — Reshape data                      ✅
 07 — Row and column operations         ✅
-08 — Find indexes of important values   ✅
-09 — Sort an array                       ✅
+08 — Find indexes of important values  ✅
+09 — Sort an array                     ✅
+10 — Remove duplicates                 ✅
 ```
 
 ### Next Exercise
 
-**10 — Remove duplicates**
+**11 — Missing values**
 
 The next task will practice:
 
-- `np.unique()`
-- Finding unique values
-- Removing duplicate values
+- `np.isnan()`
+- `np.nanmean()`
+- Handling missing values
