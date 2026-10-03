@@ -996,6 +996,83 @@ This demonstrates how NumPy can apply a feature-scaling formula element-by-eleme
 
 This exercise introduces **Min-Max normalization**, a common feature-scaling technique used to transform numerical values into a defined range.
 
+## 13 — Standardization
+
+**File:**
+
+```text
+13_standardization.py
+```
+
+### Problem
+
+Given:
+
+```python
+values = np.array([10, 20, 30, 40, 50])
+```
+
+Calculate the standardized values using:
+
+```text
+z = (x - μ) / σ
+```
+
+Where:
+
+```text
+μ = mean
+σ = standard deviation
+```
+
+### Concepts Practiced
+
+```text
+np.mean()
+np.std()
+Z-score standardization
+Feature scaling
+Vectorized NumPy operations
+```
+
+### Solution
+
+```python
+import numpy as np
+
+x = np.array([10, 20, 30, 40, 50])
+
+u = np.mean(x)
+o = np.std(x)
+
+z = (x - u) / o
+
+print(f"Original Values: {x}")
+print(f"Standardized Values: {z}")
+```
+
+### What This Solution Demonstrates
+
+The solution calculates the mean and standard deviation of the array, then applies z-score standardization to each value.
+
+For this dataset:
+
+```text
+Mean = 30
+Standard deviation ≈ 14.1421
+```
+
+The standardized values represent how many standard deviations each value is away from the mean.
+
+### Expected Results
+
+```text
+Original Values: [10 20 30 40 50]
+Standardized Values: [-1.41421356 -0.70710678  0.  0.70710678  1.41421356]
+```
+
+This exercise introduces **standardization (z-score scaling)**, which transforms values so that the resulting data has a mean of approximately 0 and a standard deviation of 1.
+
 # 📁 Project Structure
 
 Current repository structure:
@@ -1014,6 +1091,7 @@ Current repository structure:
 ├── 10_remove_duplicates.py
 ├── 11_missing_values.py
 ├── 12_normalize_values.py
+├── 13_standardization.py
 └── README.md
 ```
 
@@ -1041,11 +1119,11 @@ The filenames above represent the intended progression; files should be added as
 
 | Section   | Questions | Completed | Remaining |
 | --------- | --------: | --------: | --------: |
-| NumPy     |      1–20 |        12 |         8 |
+| NumPy     |      1–20 |        13 |         7 |
 | Pandas    |     21–40 |         0 |        20 |
-| **Total** |  **1–40** |    **12** |    **28** |
+| **Total** |  **1–40** |    **13** |    **27** |
 
-**Overall progress: 12 / 40 completed (30%)**
+**Overall progress: 13 / 40 completed (32.5%)**
 
 ---
 
@@ -1176,11 +1254,10 @@ This repository tracks the implementation of those exercises as individual Pytho
 
 ### Next Exercise
 
-**13 — Standardization**
+**14 — Compare Two Datasets**
 
 The next task will practice:
 
-- Mean
-- Standard deviation
-- Z-score
-- Feature scaling
+- Prediction error
+- Absolute error
+- Mean Absolute Error (MAE)
