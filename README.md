@@ -51,7 +51,7 @@ The original practice set deliberately moves from basic numerical computation to
 | 6   | Reshape data                     | `.reshape()`                      | ✅ Completed |
 | 7   | Row and column operations        | `axis`                            | ✅ Completed |
 | 8   | Find indexes of important values | `argmax()`, `argmin()`, `where()` | ✅ Completed |
-| 9   | Sort an array                    | `sort()`, `argsort()`             | ⬜ Pending   |
+| 9   | Sort an array                    | `sort()`, `argsort()`             | ✅ Completed |
 | 10  | Remove duplicates                | `np.unique()`                     | ⬜ Pending   |
 
 ### Level N3 — NumPy Data Analysis
@@ -789,6 +789,112 @@ This exercise reinforces the difference between **finding values** and **finding
 
 ---
 
+## 09 — Sort an Array
+
+**File:**
+
+```text
+09_sort_an_array.py
+```
+
+### Problem
+
+Given:
+
+```python
+values = np.array([45, 12, 89, 23, 67, 34])
+```
+
+Create:
+
+- Ascending version
+- Descending version
+- Indexes that would sort the original array in ascending order
+- Indexes that would sort the original array in descending order
+
+### Concepts Practiced
+
+```text
+np.sort()
+np.argsort()
+Array slicing [::-1]
+Sorting values
+Sorting indexes
+```
+
+### Solution
+
+```python
+import numpy as np
+
+values = np.array([45, 12, 89, 23, 67, 34])
+
+print(f"Original: {values}")
+print(f"Ascending: {np.sort(values)}")
+print(f"Descending: {np.sort(values)[::-1]}")
+print(f"Sort Indexes (Ascending): {np.argsort(values)}")
+print(f"Sort Indexes (Descending): {np.argsort(values)[::-1]}")
+```
+
+### What This Solution Demonstrates
+
+The solution uses `np.sort()` to return a sorted copy of the array without changing the original `values` array.
+
+For ascending order:
+
+```python
+np.sort(values)
+```
+
+returns the values from smallest to largest.
+
+For descending order:
+
+```python
+np.sort(values)[::-1]
+```
+
+first sorts the array in ascending order and then reverses it using `[::-1]`.
+
+The solution also uses `np.argsort()` to return the indexes that would sort the original array.
+
+```python
+np.argsort(values)
+```
+
+returns the indexes in ascending-value order.
+
+Reversing those indexes with:
+
+```python
+np.argsort(values)[::-1]
+```
+
+produces the indexes in descending-value order.
+
+### Expected Results
+
+```text
+Original:
+[45 12 89 23 67 34]
+
+Ascending:
+[12 23 34 45 67 89]
+
+Descending:
+[89 67 45 34 23 12]
+
+Sort Indexes (Ascending):
+[1 3 5 0 4 2]
+
+Sort Indexes (Descending):
+[2 4 0 5 3 1]
+```
+
+This exercise reinforces the difference between **sorting values** with `sort()` and **finding the positions that produce the sorted order** with `argsort()`.
+
+---
+
 # 📁 Project Structure
 
 Current repository structure:
@@ -803,6 +909,7 @@ Current repository structure:
 ├── 06_reshape_data.py
 ├── 07_row__column_operation.py
 ├── 08_find_indexes_of_important_values.py
+├── 09_sort_an_array.py
 └── README.md
 ```
 
@@ -830,11 +937,11 @@ The filenames above represent the intended progression; files should be added as
 
 | Section   | Questions | Completed | Remaining |
 | --------- | --------: | --------: | --------: |
-| NumPy     |      1–20 |         8 |        12 |
+| NumPy     |      1–20 |         9 |        11 |
 | Pandas    |     21–40 |         0 |        20 |
-| **Total** |  **1–40** |     **8** |    **32** |
+| **Total** |  **1–40** |     **9** |    **31** |
 
-**Overall progress: 8 / 40 completed (20%)**
+**Overall progress: 9 / 40 completed (22.5%)**
 
 ---
 
@@ -957,15 +1064,15 @@ This repository tracks the implementation of those exercises as individual Pytho
 06 — Reshape data                      ✅
 07 — Row and column operations         ✅
 08 — Find indexes of important values   ✅
+09 — Sort an array                       ✅
 ```
 
 ### Next Exercise
 
-**09 — Sort an array**
+**10 — Remove duplicates**
 
 The next task will practice:
 
-- `sort()`
-- `argsort()`
-- Sorting values
-- Finding the indexes that would sort an array
+- `np.unique()`
+- Finding unique values
+- Removing duplicate values
