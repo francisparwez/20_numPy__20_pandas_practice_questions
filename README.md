@@ -56,13 +56,13 @@ The original practice set deliberately moves from basic numerical computation to
 
 ### Level N3 — NumPy Data Analysis
 
-| #   | Practice Problem     | Main Concepts                                      | Status     |
-| --- | -------------------- | -------------------------------------------------- | ---------- |
-| 11  | Missing values       | `np.isnan()`, `np.nanmean()`                       | ⬜ Pending |
-| 12  | Normalize values     | Min-Max normalization, feature scaling             | ⬜ Pending |
-| 13  | Standardization      | Mean, standard deviation, z-score, feature scaling | ⬜ Pending |
-| 14  | Compare two datasets | Prediction error, absolute error, MAE              | ⬜ Pending |
-| 15  | Matrix operations    | Matrix arithmetic, `.T`, `@`                       | ⬜ Pending |
+| #   | Practice Problem     | Main Concepts                                      | Status       |
+| --- | -------------------- | -------------------------------------------------- | ------------ |
+| 11  | Missing values       | `np.isnan()`, `np.nanmean()`                       | ⬜ Pending   |
+| 12  | Normalize values     | Min-Max normalization, feature scaling             | ✅ Completed |
+| 13  | Standardization      | Mean, standard deviation, z-score, feature scaling | ⬜ Pending   |
+| 14  | Compare two datasets | Prediction error, absolute error, MAE              | ⬜ Pending   |
+| 15  | Matrix operations    | Matrix arithmetic, `.T`, `@`                       | ⬜ Pending   |
 
 ### Level N4 — Practical Data Science
 
@@ -917,6 +917,85 @@ Number of Unique Customers: 5
 
 This exercise reinforces a common data-analysis task: identifying distinct entities in a dataset and determining how many unique entities are present.
 
+## 12 — Normalize Values
+
+**File:**
+
+```text
+12_normalize_values.py
+```
+
+### Problem
+
+Given:
+
+```python
+values = np.array([10, 20, 30, 40, 50])
+```
+
+Perform Min-Max normalization using:
+
+```text
+x' = (x - min(x)) / (max(x) - min(x))
+```
+
+The expected normalized range is **0 → 1**.
+
+### Concepts Practiced
+
+```text
+np.min()
+np.max()
+Min-Max normalization
+Feature scaling
+Vectorized NumPy operations
+```
+
+### Solution
+
+```python
+import numpy as np
+
+values = np.array([10, 20, 30, 40, 50])
+
+min_ = np.min(values)
+max_ = np.max(values)
+min_max = (values - min_) / (max_ - min_)
+
+print(min_max)
+```
+
+### What This Solution Demonstrates
+
+The solution calculates the minimum and maximum values of the array, then applies the Min-Max normalization formula directly to the entire NumPy array.
+
+For this dataset:
+
+```text
+Minimum = 10
+Maximum = 50
+```
+
+The normalized values are calculated as:
+
+```text
+(10 - 10) / (50 - 10) = 0
+(20 - 10) / (50 - 10) = 0.25
+(30 - 10) / (50 - 10) = 0.50
+(40 - 10) / (50 - 10) = 0.75
+(50 - 10) / (50 - 10) = 1
+```
+
+This demonstrates how NumPy can apply a feature-scaling formula element-by-element without using a loop.
+
+### Expected Results
+
+```text
+[0.   0.25 0.5  0.75 1.  ]
+```
+
+This exercise introduces **Min-Max normalization**, a common feature-scaling technique used to transform numerical values into a defined range.
+
 # 📁 Project Structure
 
 Current repository structure:
@@ -933,6 +1012,8 @@ Current repository structure:
 ├── 08_find_indexes_of_important_values.py
 ├── 09_sort_an_array.py
 ├── 10_remove_duplicates.py
+├── 11_missing_values.py
+├── 12_normalize_values.py
 └── README.md
 ```
 
@@ -960,11 +1041,11 @@ The filenames above represent the intended progression; files should be added as
 
 | Section   | Questions | Completed | Remaining |
 | --------- | --------: | --------: | --------: |
-| NumPy     |      1–20 |        10 |        10 |
+| NumPy     |      1–20 |        12 |         8 |
 | Pandas    |     21–40 |         0 |        20 |
-| **Total** |  **1–40** |    **10** |    **30** |
+| **Total** |  **1–40** |    **12** |    **28** |
 
-**Overall progress: 10 / 40 completed (25%)**
+**Overall progress: 12 / 40 completed (30%)**
 
 ---
 
@@ -1089,14 +1170,17 @@ This repository tracks the implementation of those exercises as individual Pytho
 08 — Find indexes of important values  ✅
 09 — Sort an array                     ✅
 10 — Remove duplicates                 ✅
+11 — Missing values                    ✅
+12 — Normalize values                  ✅
 ```
 
 ### Next Exercise
 
-**11 — Missing values**
+**13 — Standardization**
 
 The next task will practice:
 
-- `np.isnan()`
-- `np.nanmean()`
-- Handling missing values
+- Mean
+- Standard deviation
+- Z-score
+- Feature scaling
