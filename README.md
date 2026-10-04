@@ -66,13 +66,13 @@ The original practice set deliberately moves from basic numerical computation to
 
 ### Level N4 — Practical Data Science
 
-| #   | Practice Problem                   | Main Concepts                                          | Status     |
-| --- | ---------------------------------- | ------------------------------------------------------ | ---------- |
-| 16  | Detect outliers with NumPy         | IQR, Q1, Q3, bounds, outliers                          | ⬜ Pending |
-| 17  | Generate synthetic data            | Random data generation, reproducibility                | ⬜ Pending |
-| 18  | Analyze a 2D dataset               | 2D arrays, column analysis, filtering                  | ⬜ Pending |
-| 19  | Correlation                        | Correlation coefficient, relationship analysis         | ⬜ Pending |
-| 20  | NumPy mini data-analysis challenge | Customer analytics, statistics, filtering, correlation | ⬜ Pending |
+| #   | Practice Problem                   | Main Concepts                                          | Status       |
+| --- | ---------------------------------- | ------------------------------------------------------ | ------------ |
+| 16  | Detect outliers with NumPy         | IQR, Q1, Q3, bounds, outliers                          | ✅ Completed |
+| 17  | Generate synthetic data            | Random data generation, reproducibility                | ⬜ Pending   |
+| 18  | Analyze a 2D dataset               | 2D arrays, column analysis, filtering                  | ⬜ Pending   |
+| 19  | Correlation                        | Correlation coefficient, relationship analysis         | ⬜ Pending   |
+| 20  | NumPy mini data-analysis challenge | Customer analytics, statistics, filtering, correlation | ⬜ Pending   |
 
 ---
 
@@ -1316,6 +1316,119 @@ Transpose Of A:
 
 This exercise reinforces the important distinction between **element-wise multiplication (`*`)** and **matrix multiplication (`@`)**, as well as the use of `.T` for transposing a matrix.
 
+## 16 — Detect Outliers with NumPy
+
+**File:**
+
+```text
+16_detect_outliers_with_numpy.py
+```
+
+### Problem
+
+Given:
+
+```python
+values = np.array([10, 12, 11, 13, 12, 15, 14, 100, 11, 13])
+```
+
+Using the IQR method, calculate:
+
+- Q1
+- Q3
+- IQR
+- Lower bound
+- Upper bound
+- Normal values
+- Outliers
+
+### Concepts Practiced
+
+```text
+np.percentile()
+Interquartile Range (IQR)
+Q1 and Q3
+Lower and upper bounds
+NumPy Boolean indexing
+Outlier detection
+```
+
+### Solution
+
+```python
+import numpy as np
+
+values = np.array([10, 12, 11, 13, 12, 15, 14, 100, 11, 13])
+
+print(f"Original Values: {values}")
+
+q1 = np.percentile(values, 25)
+print(f"Q1: {q1}")
+
+q3 = np.percentile(values, 75)
+print(f"Q3: {q3}")
+
+iqr = q3 - q1
+print(f"IQR: {iqr}")
+
+lower_bound = q1 - (1.5 * iqr)
+print(f"Lower Bound: {lower_bound}")
+
+upper_bound = q3 + (1.5 * iqr)
+print(f"Upper Bound: {upper_bound}")
+
+normal_values = values[(values >= lower_bound) & (values <= upper_bound)]
+print(f"Normal Values: {normal_values}")
+
+outliers = values[(values < lower_bound) | (values > upper_bound)]
+print(f"Outliers: {outliers}")
+```
+
+### What This Solution Demonstrates
+
+The solution applies the **IQR method** to identify values that fall outside the expected range of the dataset.
+
+First, `np.percentile()` calculates the first and third quartiles:
+
+```python
+q1 = np.percentile(values, 25)
+q3 = np.percentile(values, 75)
+```
+
+The interquartile range is then calculated as:
+
+```python
+iqr = q3 - q1
+```
+
+The lower and upper bounds are calculated using the standard IQR rule:
+
+```text
+Lower Bound = Q1 - 1.5 × IQR
+Upper Bound = Q3 + 1.5 × IQR
+```
+
+Boolean indexing is then used to separate values inside the bounds from values outside them.
+
+### Expected Results
+
+```text
+Q1: 11.0
+Q3: 14.0
+IQR: 3.0
+Lower Bound: 6.5
+Upper Bound: 18.5
+
+Normal Values: [10 12 11 13 12 15 14 11 13]
+Outliers: [100]
+```
+
+The value **100** is identified as an outlier because it is greater than the upper bound of `18.5`.
+
+This exercise reinforces **IQR-based outlier detection** and combines percentile calculations with NumPy Boolean indexing.
+
+---
+
 # 📁 Project Structure
 
 Current repository structure:
@@ -1337,6 +1450,7 @@ Current repository structure:
 ├── 13_standardization.py
 ├── 14_comparing_two_datasets.py
 ├── 15_matrix_operations.py
+├── 16_detect_outliers_with_numpy.py
 └── README.md
 ```
 
@@ -1364,11 +1478,11 @@ The filenames above represent the intended progression; files should be added as
 
 | Section   | Questions | Completed | Remaining |
 | --------- | --------: | --------: | --------: |
-| NumPy     |      1–20 |        15 |         5 |
+| NumPy     |      1–20 |        16 |         4 |
 | Pandas    |     21–40 |         0 |        20 |
-| **Total** |  **1–40** |    **15** |    **25** |
+| **Total** |  **1–40** |    **16** |    **24** |
 
-**Overall progress: 15 / 40 completed (37.5%)**
+**Overall progress: 16 / 40 completed (40%)**
 
 ---
 
@@ -1498,15 +1612,15 @@ This repository tracks the implementation of those exercises as individual Pytho
 13 — Standardization                   ✅
 14 — Compare two datasets              ✅
 15 — Matrix operations                 ✅
+16 — Detect outliers with NumPy        ✅
 ```
 
 ### Next Exercise
 
-**16 — Detect Outliers with NumPy**
+**17 — Generate Synthetic Data with NumPy**
 
 The next task will practice:
 
-- Interquartile Range (IQR)
-- Q1 and Q3
-- Lower and upper bounds
-- Outlier detection
+- Random data generation
+- Reproducibility
+- NumPy random functions
