@@ -62,7 +62,7 @@ The original practice set deliberately moves from basic numerical computation to
 | 12  | Normalize values     | Min-Max normalization, feature scaling             | ✅ Completed |
 | 13  | Standardization      | Mean, standard deviation, z-score, feature scaling | ✅ Completed |
 | 14  | Compare two datasets | Prediction error, absolute error, MAE              | ✅ Completed |
-| 15  | Matrix operations    | Matrix arithmetic, `.T`, `@`                       | ⬜ Pending   |
+| 15  | Matrix operations    | Matrix arithmetic, `.T`, `@`                       | ✅ Completed |
 
 ### Level N4 — Practical Data Science
 
@@ -1119,7 +1119,7 @@ predicted = np.array([110, 115, 145, 210, 240])
 
 error = predicted - actual
 absolute_error = np.abs(error)
-mae = int(np.mean(absolute_error))
+mae = np.mean(absolute_error)
 
 print(f"Error: {error}")
 print(f"Absolute Error: {absolute_error}")
@@ -1149,7 +1149,7 @@ This removes the sign from each error so that only the magnitude of the error re
 For **Mean Absolute Error (MAE)**:
 
 ```python
-mae = int(np.mean(absolute_error))
+mae = np.mean(absolute_error)
 ```
 
 This calculates the average of all absolute errors.
@@ -1164,12 +1164,157 @@ Absolute Error:
 [10  5  5 10 10]
 
 Mean Absolute Error:
-8
+8.0
 ```
 
 This exercise introduces a basic **model evaluation metric**, Mean Absolute Error, which measures the average magnitude of prediction errors.
 
 ---
+
+## 15 — Matrix Operations
+
+**File:**
+
+```text
+15_matrix_operations.py
+```
+
+### Problem
+
+Given:
+
+```python
+A = np.array([
+    [1, 2],
+    [3, 4]
+])
+
+B = np.array([
+    [5, 6],
+    [7, 8]
+])
+```
+
+Calculate:
+
+- `A + B`
+- `A - B`
+- Element-wise multiplication
+- Matrix multiplication
+- Transpose of `A`
+
+### Concepts Practiced
+
+```text
+Matrix arithmetic
+Element-wise operations
+Matrix multiplication
+Transpose
+.T
+@
+```
+
+### Solution
+
+```python
+import numpy as np
+
+A = np.array([
+    [1, 2],
+    [3, 4]
+])
+
+B = np.array([
+    [5, 6],
+    [7, 8]
+])
+
+print(f"A: \n{A}")
+print(f"B: \n{B}")
+print(f"A + B: \n{A + B}")
+print(f"A - B: \n{A - B}")
+print(f"A @ B: \n{A @ B}")
+print(f"A X B: \n{A * B}")
+print(f"Transpose Of A: \n{A.T}")
+```
+
+### What This Solution Demonstrates
+
+The solution performs several common matrix operations using NumPy.
+
+For **matrix addition**:
+
+```python
+A + B
+```
+
+NumPy adds corresponding elements from the two matrices.
+
+For **matrix subtraction**:
+
+```python
+A - B
+```
+
+NumPy subtracts corresponding elements from `B` from `A`.
+
+For **element-wise multiplication**:
+
+```python
+A * B
+```
+
+Each element in `A` is multiplied by the corresponding element in `B`.
+
+For **matrix multiplication**:
+
+```python
+A @ B
+```
+
+The `@` operator performs matrix multiplication, where each result is calculated from a row of `A` and a column of `B`.
+
+For the **transpose**:
+
+```python
+A.T
+```
+
+The rows of `A` become columns and the columns become rows.
+
+### Expected Results
+
+```text
+A:
+[[1 2]
+ [3 4]]
+
+B:
+[[5 6]
+ [7 8]]
+
+A + B:
+[[ 6  8]
+ [10 12]]
+
+A - B:
+[[-4 -4]
+ [-4 -4]]
+
+A @ B:
+[[19 22]
+ [43 50]]
+
+A X B:
+[[ 5 12]
+ [21 32]]
+
+Transpose Of A:
+[[1 3]
+ [2 4]]
+```
+
+This exercise reinforces the important distinction between **element-wise multiplication (`*`)** and **matrix multiplication (`@`)**, as well as the use of `.T` for transposing a matrix.
 
 # 📁 Project Structure
 
@@ -1191,6 +1336,7 @@ Current repository structure:
 ├── 12_normalize_values.py
 ├── 13_standardization.py
 ├── 14_comparing_two_datasets.py
+├── 15_matrix_operations.py
 └── README.md
 ```
 
@@ -1218,11 +1364,11 @@ The filenames above represent the intended progression; files should be added as
 
 | Section   | Questions | Completed | Remaining |
 | --------- | --------: | --------: | --------: |
-| NumPy     |      1–20 |        14 |         6 |
+| NumPy     |      1–20 |        15 |         5 |
 | Pandas    |     21–40 |         0 |        20 |
-| **Total** |  **1–40** |    **14** |    **26** |
+| **Total** |  **1–40** |    **15** |    **25** |
 
-**Overall progress: 14 / 40 completed (35.0%)**
+**Overall progress: 15 / 40 completed (37.5%)**
 
 ---
 
@@ -1351,16 +1497,16 @@ This repository tracks the implementation of those exercises as individual Pytho
 12 — Normalize values                  ✅
 13 — Standardization                   ✅
 14 — Compare two datasets              ✅
+15 — Matrix operations                 ✅
 ```
 
 ### Next Exercise
 
-**15 — Matrix Operations**
+**16 — Detect Outliers with NumPy**
 
 The next task will practice:
 
-- Matrix arithmetic
-- Transpose
-- Matrix multiplication
-- `.T`
-- `@`
+- Interquartile Range (IQR)
+- Q1 and Q3
+- Lower and upper bounds
+- Outlier detection
