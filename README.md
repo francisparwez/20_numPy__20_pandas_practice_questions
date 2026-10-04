@@ -69,7 +69,7 @@ The original practice set deliberately moves from basic numerical computation to
 | #   | Practice Problem                   | Main Concepts                                          | Status       |
 | --- | ---------------------------------- | ------------------------------------------------------ | ------------ |
 | 16  | Detect outliers with NumPy         | IQR, Q1, Q3, bounds, outliers                          | ✅ Completed |
-| 17  | Generate synthetic data            | Random data generation, reproducibility                | ⬜ Pending   |
+| 17  | Generate synthetic data            | Random data generation, reproducibility                | ✅ Completed |
 | 18  | Analyze a 2D dataset               | 2D arrays, column analysis, filtering                  | ⬜ Pending   |
 | 19  | Correlation                        | Correlation coefficient, relationship analysis         | ⬜ Pending   |
 | 20  | NumPy mini data-analysis challenge | Customer analytics, statistics, filtering, correlation | ⬜ Pending   |
@@ -1429,6 +1429,83 @@ This exercise reinforces **IQR-based outlier detection** and combines percentile
 
 ---
 
+## 17 — Generate Synthetic Data
+
+**File:**
+
+```text
+17_generate_synthetic_data.py
+```
+
+### Problem
+
+Use NumPy to generate:
+
+- 100 random ages between **18 and 60**
+- 100 random salaries between **30,000 and 150,000**
+- 100 random exam scores between **0 and 100**
+
+Then calculate basic statistics for each dataset.
+
+**Concepts:** random data generation, reproducibility.
+
+### Concepts Practiced
+
+```text
+np.random.seed()
+np.random.randint()
+Random data generation
+Reproducibility
+np.mean()
+np.median()
+np.min()
+np.max()
+np.std()
+Reusable functions
+```
+
+### Solution
+
+```python
+import numpy as np
+
+np.random.seed(42)
+
+ages = np.random.randint(18, 61, size=100)
+salaries = np.random.randint(30000, 150001, size=100)
+exam_scores = np.random.randint(0, 101, size=100)
+
+def calculate_statistics(name, data_array):
+    print(f"=== {name} Statistics ===")
+    print(f"Mean:               {np.mean(data_array):.2f}")
+    print(f"Median:             {np.median(data_array):.2f}")
+    print(f"Minimum Value:      {np.min(data_array)}")
+    print(f"Maximum Value:      {np.max(data_array)}")
+    print(f"Standard Deviation: {np.std(data_array):.2f}")
+
+
+print(f"Ages: {ages}")
+calculate_statistics("Ages", ages)
+print(f"Salaries: {salaries}")
+calculate_statistics("Salaries", salaries)
+print(f"Exam Scores: {exam_scores}")
+calculate_statistics("Exam Scores", exam_scores)
+```
+
+### What This Solution Demonstrates
+
+The solution uses NumPy's random-number generation functions to create three synthetic datasets, each containing 100 values.
+
+`np.random.seed(42)` makes the random generation **reproducible**. Running the program again with the same seed produces the same generated values, which is useful when testing, debugging, and comparing analysis results.
+
+The `np.random.randint()` calls generate integer values within the required ranges. Because the upper bound is exclusive, the code correctly uses `61`, `150001`, and `101` to include 60, 150,000, and 100 respectively.
+
+The `calculate_statistics()` function avoids repeating the same statistical calculation code for each dataset. For every dataset, it calculates the mean, median, minimum, maximum, and standard deviation.
+
+This exercise reinforces the workflow of **generating reproducible synthetic data → calculating descriptive statistics → reusing a function across multiple datasets**.
+
+---
+
 # 📁 Project Structure
 
 Current repository structure:
@@ -1451,6 +1528,7 @@ Current repository structure:
 ├── 14_comparing_two_datasets.py
 ├── 15_matrix_operations.py
 ├── 16_detect_outliers_with_numpy.py
+├── 17_generate_synthetic_data.py
 └── README.md
 ```
 
@@ -1478,11 +1556,11 @@ The filenames above represent the intended progression; files should be added as
 
 | Section   | Questions | Completed | Remaining |
 | --------- | --------: | --------: | --------: |
-| NumPy     |      1–20 |        16 |         4 |
+| NumPy     |      1–20 |        17 |         3 |
 | Pandas    |     21–40 |         0 |        20 |
-| **Total** |  **1–40** |    **16** |    **24** |
+| **Total** |  **1–40** |    **17** |    **23** |
 
-**Overall progress: 16 / 40 completed (40%)**
+**Overall progress: 17 / 40 completed (42.5%)**
 
 ---
 
@@ -1613,14 +1691,15 @@ This repository tracks the implementation of those exercises as individual Pytho
 14 — Compare two datasets              ✅
 15 — Matrix operations                 ✅
 16 — Detect outliers with NumPy        ✅
+17 — Generate synthetic data            ✅
 ```
 
 ### Next Exercise
 
-**17 — Generate Synthetic Data with NumPy**
+**18 — Analyze a 2D Dataset with NumPy**
 
 The next task will practice:
 
-- Random data generation
-- Reproducibility
-- NumPy random functions
+- 2D arrays
+- Column analysis
+- Filtering
