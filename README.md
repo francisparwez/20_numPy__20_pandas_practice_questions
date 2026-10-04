@@ -58,10 +58,10 @@ The original practice set deliberately moves from basic numerical computation to
 
 | #   | Practice Problem     | Main Concepts                                      | Status       |
 | --- | -------------------- | -------------------------------------------------- | ------------ |
-| 11  | Missing values       | `np.isnan()`, `np.nanmean()`                       | ⬜ Pending   |
+| 11  | Missing values       | `np.isnan()`, `np.nanmean()`                       | ✅ Completed |
 | 12  | Normalize values     | Min-Max normalization, feature scaling             | ✅ Completed |
-| 13  | Standardization      | Mean, standard deviation, z-score, feature scaling | ⬜ Pending   |
-| 14  | Compare two datasets | Prediction error, absolute error, MAE              | ⬜ Pending   |
+| 13  | Standardization      | Mean, standard deviation, z-score, feature scaling | ✅ Completed |
+| 14  | Compare two datasets | Prediction error, absolute error, MAE              | ✅ Completed |
 | 15  | Matrix operations    | Matrix arithmetic, `.T`, `@`                       | ⬜ Pending   |
 
 ### Level N4 — Practical Data Science
@@ -1073,6 +1073,104 @@ Standardized Values: [-1.41421356 -0.70710678  0.  0.70710678  1.41421356]
 
 This exercise introduces **standardization (z-score scaling)**, which transforms values so that the resulting data has a mean of approximately 0 and a standard deviation of 1.
 
+## 14 — Compare Two Datasets
+
+**File:**
+
+```text
+14_comparing_two_datasets.py
+```
+
+### Problem
+
+Given:
+
+```python
+actual = np.array([100, 120, 150, 200, 250])
+predicted = np.array([110, 115, 145, 210, 240])
+```
+
+Calculate:
+
+- Error for each prediction
+- Absolute error
+- Mean Absolute Error (MAE)
+
+This exercise introduces basic model evaluation.
+
+### Concepts Practiced
+
+```text
+Prediction error
+Signed error
+Absolute error
+Mean Absolute Error (MAE)
+np.abs()
+np.mean()
+```
+
+### Solution
+
+```python
+import numpy as np
+
+actual = np.array([100, 120, 150, 200, 250])
+predicted = np.array([110, 115, 145, 210, 240])
+
+error = predicted - actual
+absolute_error = np.abs(error)
+mae = int(np.mean(absolute_error))
+
+print(f"Error: {error}")
+print(f"Absolute Error: {absolute_error}")
+print(f"Mean Absolute Error: {mae}")
+```
+
+### What This Solution Demonstrates
+
+The solution compares predicted values against actual values to measure prediction error.
+
+For the **error for each prediction**:
+
+```python
+error = predicted - actual
+```
+
+This produces signed errors, showing whether each prediction is above or below the actual value.
+
+For the **absolute error**:
+
+```python
+absolute_error = np.abs(error)
+```
+
+This removes the sign from each error so that only the magnitude of the error remains.
+
+For **Mean Absolute Error (MAE)**:
+
+```python
+mae = int(np.mean(absolute_error))
+```
+
+This calculates the average of all absolute errors.
+
+### Expected Results
+
+```text
+Error:
+[ 10  -5  -5  10 -10]
+
+Absolute Error:
+[10  5  5 10 10]
+
+Mean Absolute Error:
+8
+```
+
+This exercise introduces a basic **model evaluation metric**, Mean Absolute Error, which measures the average magnitude of prediction errors.
+
+---
+
 # 📁 Project Structure
 
 Current repository structure:
@@ -1092,6 +1190,7 @@ Current repository structure:
 ├── 11_missing_values.py
 ├── 12_normalize_values.py
 ├── 13_standardization.py
+├── 14_comparing_two_datasets.py
 └── README.md
 ```
 
@@ -1119,11 +1218,11 @@ The filenames above represent the intended progression; files should be added as
 
 | Section   | Questions | Completed | Remaining |
 | --------- | --------: | --------: | --------: |
-| NumPy     |      1–20 |        13 |         7 |
+| NumPy     |      1–20 |        14 |         6 |
 | Pandas    |     21–40 |         0 |        20 |
-| **Total** |  **1–40** |    **13** |    **27** |
+| **Total** |  **1–40** |    **14** |    **26** |
 
-**Overall progress: 13 / 40 completed (32.5%)**
+**Overall progress: 14 / 40 completed (35.0%)**
 
 ---
 
@@ -1250,14 +1349,18 @@ This repository tracks the implementation of those exercises as individual Pytho
 10 — Remove duplicates                 ✅
 11 — Missing values                    ✅
 12 — Normalize values                  ✅
+13 — Standardization                   ✅
+14 — Compare two datasets              ✅
 ```
 
 ### Next Exercise
 
-**14 — Compare Two Datasets**
+**15 — Matrix Operations**
 
 The next task will practice:
 
-- Prediction error
-- Absolute error
-- Mean Absolute Error (MAE)
+- Matrix arithmetic
+- Transpose
+- Matrix multiplication
+- `.T`
+- `@`
