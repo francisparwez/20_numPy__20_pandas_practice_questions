@@ -71,7 +71,7 @@ The original practice set deliberately moves from basic numerical computation to
 | 16  | Detect outliers with NumPy         | IQR, Q1, Q3, bounds, outliers                          | ✅ Completed |
 | 17  | Generate synthetic data            | Random data generation, reproducibility                | ✅ Completed |
 | 18  | Analyze a 2D dataset               | 2D arrays, column analysis, filtering                  | ✅ Completed |
-| 19  | Correlation                        | Correlation coefficient, relationship analysis         | ⬜ Pending   |
+| 19  | Correlation                        | Correlation coefficient, relationship analysis         | ✅ Completed |
 | 20  | NumPy mini data-analysis challenge | Customer analytics, statistics, filtering, correlation | ⬜ Pending   |
 
 ---
@@ -1609,6 +1609,82 @@ Employee With Salary > 65,000:
 
 This exercise reinforces **2D array column analysis, aggregation, index finding, and Boolean filtering**.
 
+## 19 — Correlation
+
+**File:**
+
+```text
+19_NUMPY_correlation.py
+```
+
+### Problem
+
+Given:
+
+```python
+experience = np.array([1, 2, 3, 4, 5, 6])
+salary = np.array([30000, 35000, 40000, 48000, 55000, 65000])
+```
+
+Calculate the correlation coefficient and determine whether the relationship is:
+
+- Positive
+- Negative
+- Approximately zero
+
+### Concepts Practiced
+
+```text
+np.corrcoef()
+Correlation coefficient
+Relationship analysis
+Array indexing
+Conditional logic
+```
+
+### Solution
+
+```python
+import numpy as np
+
+experience = np.array([1, 2, 3, 4, 5, 6])
+salary = np.array([30000, 35000, 40000, 48000, 55000, 65000])
+
+correlation = np.corrcoef(experience, salary)[0, 1]
+
+print(f"Correlation coefficient: {correlation:.2f}")
+
+if correlation > 0:
+    print("Relationship: Positive")
+elif correlation < 0:
+    print("Relationship: Negative")
+else:
+    print("Relationship: Approximately zero")
+```
+
+### What This Solution Demonstrates
+
+The solution uses `np.corrcoef()` to calculate the correlation matrix between experience and salary.
+
+The `[0, 1]` indexing extracts the correlation coefficient between the two variables rather than returning the complete 2 × 2 correlation matrix.
+
+The coefficient is then classified using conditional logic:
+
+- Greater than `0` → Positive relationship
+- Less than `0` → Negative relationship
+- Equal to `0` → Approximately zero relationship
+
+### Expected Results
+
+```text
+Correlation coefficient: 0.99
+Relationship: Positive
+```
+
+The result shows a **very strong positive relationship** between experience and salary in this dataset.
+
+This exercise reinforces **correlation analysis**, extracting values from NumPy results, and using conditional logic to interpret a numerical relationship.
+
 # 📁 Project Structure
 
 Current repository structure:
@@ -1633,6 +1709,7 @@ Current repository structure:
 ├── 16_detect_outliers_with_numpy.py
 ├── 17_generate_synthetic_data.py
 ├── 18_analyze_2d_dataset.py
+├── 19_NUMPY_correlation.py
 └── README.md
 ```
 
@@ -1660,11 +1737,11 @@ The filenames above represent the intended progression; files should be added as
 
 | Section   | Questions | Completed | Remaining |
 | --------- | --------: | --------: | --------: |
-| NumPy     |      1–20 |        18 |         2 |
+| NumPy     |      1–20 |        19 |         1 |
 | Pandas    |     21–40 |         0 |        20 |
-| **Total** |  **1–40** |    **18** |    **22** |
+| **Total** |  **1–40** |    **19** |    **21** |
 
-**Overall progress: 18 / 40 completed (45%)**
+**Overall progress: 19 / 40 completed (47.5%)**
 
 ---
 
@@ -1796,14 +1873,17 @@ This repository tracks the implementation of those exercises as individual Pytho
 15 — Matrix operations                 ✅
 16 — Detect outliers with NumPy        ✅
 17 — Generate synthetic data            ✅
-18 — Analyze a 2D dataset                ✅
+18 — Analyze a 2D dataset              ✅
+19 — Correlation with NumPy            ✅
 ```
 
 ### Next Exercise
 
-**19 — Correlation with NumPy**
+**20 — NumPy Mini Data-Analysis Challenge**
 
 The next task will practice:
 
-- Correlation coefficient
-- Relationship analysis
+- Customer analytics
+- Statistics
+- Filtering
+- Correlation
