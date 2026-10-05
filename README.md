@@ -70,7 +70,7 @@ The original practice set deliberately moves from basic numerical computation to
 | --- | ---------------------------------- | ------------------------------------------------------ | ------------ |
 | 16  | Detect outliers with NumPy         | IQR, Q1, Q3, bounds, outliers                          | ✅ Completed |
 | 17  | Generate synthetic data            | Random data generation, reproducibility                | ✅ Completed |
-| 18  | Analyze a 2D dataset               | 2D arrays, column analysis, filtering                  | ⬜ Pending   |
+| 18  | Analyze a 2D dataset               | 2D arrays, column analysis, filtering                  | ✅ Completed |
 | 19  | Correlation                        | Correlation coefficient, relationship analysis         | ⬜ Pending   |
 | 20  | NumPy mini data-analysis challenge | Customer analytics, statistics, filtering, correlation | ⬜ Pending   |
 
@@ -1506,6 +1506,109 @@ This exercise reinforces the workflow of **generating reproducible synthetic dat
 
 ---
 
+## 18 — Analyze a 2D Dataset
+
+**File:**
+
+```text
+18_analyze_2d_dataset.py
+```
+
+### Problem
+
+Given:
+
+```python
+data = np.array([
+    [25, 50000, 3],
+    [32, 70000, 5],
+    [28, 60000, 4],
+    [45, 90000, 8],
+    [35, 75000, 6]
+])
+```
+
+Columns represent:
+
+```text
+Age | Salary | Experience
+```
+
+Calculate:
+
+- Average age
+- Average salary
+- Average experience
+- Highest salary
+- Employee with the highest salary
+- Employees with salary > 65,000
+
+### Concepts Practiced
+
+```text
+2D NumPy arrays
+Column selection
+np.mean()
+np.max()
+np.argmax()
+Boolean indexing
+Conditional filtering
+```
+
+### Solution
+
+```python
+import numpy as np
+
+data = np.array([
+    [25, 50000, 3],
+    [32, 70000, 5],
+    [28, 60000, 4],
+    [45, 90000, 8],
+    [35, 75000, 6]
+])
+
+avg_ages = np.mean(data[:, 0])
+avg_salary = np.mean(data[:, 1])
+avg_experience = np.mean(data[:, 2])
+max_salary = np.max(data[:, 1])
+highest_paid_employee = data[np.argmax(data[:, 1])]
+employees_with_salary_gt_65000 = data[data[:, 1] > 65000]
+
+
+print(f"Average Ages: {avg_ages}")
+print(f"Average Salary: {avg_salary}")
+print(f"Average Experience: {avg_experience}")
+print(f"Max Salary: {max_salary}")
+print(f"Employee With The Highest Salary:\n{highest_paid_employee}")
+print(f"Employee With Salary > 65,000:\n{employees_with_salary_gt_65000}")
+```
+
+### What This Solution Demonstrates
+
+The solution treats the NumPy array as a small employee dataset and analyzes each column separately.
+
+Column selection is performed using `data[:, 0]`, `data[:, 1]`, and `data[:, 2]` for Age, Salary, and Experience respectively. `np.mean()` calculates averages, while `np.max()` identifies the highest salary.
+
+To retrieve the complete employee row associated with the highest salary, `np.argmax()` is combined with NumPy indexing. Boolean indexing filters employees whose salary is greater than 65,000.
+
+### Expected Results
+
+```text
+Average Ages: 33.0
+Average Salary: 69000.0
+Average Experience: 5.2
+Max Salary: 90000
+Employee With The Highest Salary:
+[   45 90000     8]
+Employee With Salary > 65,000:
+[[   32 70000     5]
+ [   45 90000     8]
+ [   35 75000     6]]
+```
+
+This exercise reinforces **2D array column analysis, aggregation, index finding, and Boolean filtering**.
+
 # 📁 Project Structure
 
 Current repository structure:
@@ -1529,6 +1632,7 @@ Current repository structure:
 ├── 15_matrix_operations.py
 ├── 16_detect_outliers_with_numpy.py
 ├── 17_generate_synthetic_data.py
+├── 18_analyze_2d_dataset.py
 └── README.md
 ```
 
@@ -1556,11 +1660,11 @@ The filenames above represent the intended progression; files should be added as
 
 | Section   | Questions | Completed | Remaining |
 | --------- | --------: | --------: | --------: |
-| NumPy     |      1–20 |        17 |         3 |
+| NumPy     |      1–20 |        18 |         2 |
 | Pandas    |     21–40 |         0 |        20 |
-| **Total** |  **1–40** |    **17** |    **23** |
+| **Total** |  **1–40** |    **18** |    **22** |
 
-**Overall progress: 17 / 40 completed (42.5%)**
+**Overall progress: 18 / 40 completed (45%)**
 
 ---
 
@@ -1692,14 +1796,14 @@ This repository tracks the implementation of those exercises as individual Pytho
 15 — Matrix operations                 ✅
 16 — Detect outliers with NumPy        ✅
 17 — Generate synthetic data            ✅
+18 — Analyze a 2D dataset                ✅
 ```
 
 ### Next Exercise
 
-**18 — Analyze a 2D Dataset with NumPy**
+**19 — Correlation with NumPy**
 
 The next task will practice:
 
-- 2D arrays
-- Column analysis
-- Filtering
+- Correlation coefficient
+- Relationship analysis
