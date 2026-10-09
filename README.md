@@ -72,7 +72,7 @@ The original practice set deliberately moves from basic numerical computation to
 | 17  | Generate synthetic data            | Random data generation, reproducibility                | ✅ Completed |
 | 18  | Analyze a 2D dataset               | 2D arrays, column analysis, filtering                  | ✅ Completed |
 | 19  | Correlation                        | Correlation coefficient, relationship analysis         | ✅ Completed |
-| 20  | NumPy mini data-analysis challenge | Customer analytics, statistics, filtering, correlation | ⬜ Pending   |
+| 20  | NumPy mini data-analysis challenge | Customer analytics, statistics, filtering, correlation | ✅ Completed |
 
 ---
 
@@ -1685,6 +1685,137 @@ The result shows a **very strong positive relationship** between experience and 
 
 This exercise reinforces **correlation analysis**, extracting values from NumPy results, and using conditional logic to interpret a numerical relationship.
 
+## 20 — NumPy Mini Data-Analysis Challenge
+
+**File:**
+
+```text
+20_NUMPY_mini_data_analysis_challenge.py
+```
+
+### Problem
+
+Generate a dataset for **100 customers**, with five attributes:
+
+- Customer ID
+- Age
+- Annual income
+- Number of purchases
+- Total spending
+
+Use NumPy to calculate average age, average income, average spending, the highest and lowest spenders, customers spending above average, customers with more than 10 purchases, income–spending correlation, median spending, and the number of unique age values.
+
+### Concepts Practiced
+
+```text
+np.random.seed()
+np.column_stack()
+Array transposition and unpacking (.T)
+np.mean(), np.max(), np.min(), np.argmax(), np.argmin()
+Boolean indexing
+np.corrcoef()
+np.median()
+np.unique()
+```
+
+### Solution
+
+```python
+import numpy as np
+
+# Generate reproducible data
+np.random.seed(42)
+
+dataset = np.column_stack((
+    np.arange(1, 101),                     # Customer ID
+    np.random.randint(18, 99, size=100),    # Age
+    np.random.randint(30000, 150001, 100),  # Annual income
+    np.random.randint(1, 51, size=100),     # Number of purchases
+    np.random.randint(5, 4501, size=100)    # Total spending
+))
+
+# Extract each column
+customer_id, age, income, no_of_purchases, total_spending = dataset.T
+
+print("Dataset shape:", dataset.shape)
+print("Number of customers:", len(customer_id))
+
+# 1. Average age
+print("\n1. Average age:", np.mean(age))
+
+# 2. Average income
+print("2. Average income:", np.mean(income))
+
+# 3. Average spending
+average_spending = np.mean(total_spending)
+print("3. Average spending:", average_spending)
+
+# 4. Highest spender
+highest_index = np.argmax(total_spending)
+print("4. Highest spender ID:", customer_id[highest_index])
+print("   Highest spending:", total_spending[highest_index])
+
+# 5. Lowest spender
+lowest_index = np.argmin(total_spending)
+print("5. Lowest spender ID:", customer_id[lowest_index])
+print("   Lowest spending:", total_spending[lowest_index])
+
+# 6. Customers spending above average
+above_average = total_spending > average_spending
+print("6. Customer IDs spending above average:", customer_id[above_average])
+print("   Their spending:", total_spending[above_average])
+
+# 7. Customers with more than 10 purchases
+frequent_customers = no_of_purchases > 10
+print("7. Customer IDs with more than 10 purchases:", customer_id[frequent_customers])
+print("   Their purchase counts:", no_of_purchases[frequent_customers])
+
+# 8. Correlation between income and spending
+correlation = np.corrcoef(income, total_spending)[0, 1]
+print("8. Income-spending correlation:", round(correlation, 3))
+
+# 9. Median spending
+print("9. Median spending:", np.median(total_spending))
+
+# 10. Number of unique age values
+unique_ages = np.unique(age)
+print("10. Number of unique age values:", len(unique_ages))
+print("    Unique ages:", unique_ages)
+```
+
+### What This Solution Demonstrates
+
+- `np.random.seed(42)` makes the generated data reproducible.
+- `np.column_stack()` combines the five 100-element arrays into a 100 × 5 dataset.
+- `dataset.T` transposes the dataset so each column can be unpacked into its own array.
+- `np.argmax()` and `np.argmin()` identify the indexes of the highest and lowest spending values. Those indexes are then used to retrieve the corresponding customer IDs.
+- Boolean masks filter customer IDs and their associated spending or purchase counts while preserving the row correspondence.
+- `np.corrcoef(income, total_spending)[0, 1]` extracts the single correlation coefficient from the 2 × 2 correlation matrix.
+- `np.unique(age)` returns the distinct ages, and `len()` counts them.
+
+### Key Results
+
+With the fixed random seed, the main numerical results are:
+
+```text
+Dataset shape: (100, 5)
+Number of customers: 100
+Average age: 57.38
+Average income: 93302.94
+Average spending: 2296.82
+Highest spender ID: 89 (spending: 4500)
+Lowest spender ID: 38 (spending: 21)
+Income-spending correlation: -0.037
+Median spending: 2509.5
+Number of unique age values: 56
+```
+
+The generated income and spending values are independent random draws, so the correlation is close to zero in this run. This is expected for synthetic practice data and should not be interpreted as evidence about real customers.
+
+This final NumPy exercise brings together **dataset construction, descriptive statistics, index-based selection, Boolean filtering, correlation, and unique-value counting**.
+
+---
+
 # 📁 Project Structure
 
 Current repository structure:
@@ -1710,6 +1841,7 @@ Current repository structure:
 ├── 17_generate_synthetic_data.py
 ├── 18_analyze_2d_dataset.py
 ├── 19_NUMPY_correlation.py
+├── 20_NUMPY_mini_data_analysis_challenge.py
 └── README.md
 ```
 
@@ -1737,11 +1869,11 @@ The filenames above represent the intended progression; files should be added as
 
 | Section   | Questions | Completed | Remaining |
 | --------- | --------: | --------: | --------: |
-| NumPy     |      1–20 |        19 |         1 |
+| NumPy     |      1–20 |        20 |         0 |
 | Pandas    |     21–40 |         0 |        20 |
-| **Total** |  **1–40** |    **19** |    **21** |
+| **Total** |  **1–40** |    **20** |    **20** |
 
-**Overall progress: 19 / 40 completed (47.5%)**
+**Overall progress: 20 / 40 completed (50%)**
 
 ---
 
@@ -1875,15 +2007,11 @@ This repository tracks the implementation of those exercises as individual Pytho
 17 — Generate synthetic data            ✅
 18 — Analyze a 2D dataset              ✅
 19 — Correlation with NumPy            ✅
+20 — NumPy mini data-analysis challenge ✅
 ```
 
 ### Next Exercise
 
-**20 — NumPy Mini Data-Analysis Challenge**
+**21 — Create a DataFrame**
 
-The next task will practice:
-
-- Customer analytics
-- Statistics
-- Filtering
-- Correlation
+The Pandas section begins with DataFrame creation and inspection, including `head()`, `shape`, column names, data types, and descriptive statistics.
