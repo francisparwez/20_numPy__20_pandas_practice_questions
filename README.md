@@ -82,13 +82,13 @@ The Pandas section begins after the NumPy exercises and moves from DataFrame fun
 
 ## Level P1 — Pandas Fundamentals
 
-| #   | Practice Problem          | Main Concepts                                                 | Status     |
-| --- | ------------------------- | ------------------------------------------------------------- | ---------- |
-| 21  | Create a DataFrame        | `DataFrame`, `head()`, `shape`, columns, `dtypes`, statistics | ⬜ Pending |
-| 22  | Select columns            | `df["column"]`, `df[[...]]`                                   | ⬜ Pending |
-| 23  | Filter rows               | Boolean filtering, multiple conditions                        | ⬜ Pending |
-| 24  | Sort data                 | `sort_values()`                                               | ⬜ Pending |
-| 25  | Create calculated columns | Vectorized column operations                                  | ⬜ Pending |
+| #   | Practice Problem          | Main Concepts                                                 | Status       |
+| --- | ------------------------- | ------------------------------------------------------------- | ------------ |
+| 21  | Create a DataFrame        | `DataFrame`, `head()`, `shape`, columns, `dtypes`, statistics | ✅ Completed |
+| 22  | Select columns            | `df["column"]`, `df[[...]]`                                   | ✅ Completed |
+| 23  | Filter rows               | Boolean filtering, multiple conditions                        | ✅ Completed |
+| 24  | Sort data                 | `sort_values()`                                               | ⬜ Pending   |
+| 25  | Create calculated columns | Vectorized column operations                                  | ⬜ Pending   |
 
 ## Level P2 — Pandas Data Cleaning
 
@@ -1816,6 +1816,171 @@ This final NumPy exercise brings together **dataset construction, descriptive st
 
 ---
 
+## 21 — Create a DataFrame
+
+**File:**
+
+```text
+21_PANDAS_create_dataframe.py
+```
+
+### Problem
+
+Create a DataFrame from employee data and display the first five rows, shape, column names, data types, and basic statistics.
+
+### Concepts Practiced
+
+```text
+pd.DataFrame()
+df.head()
+df.shape
+df.columns
+df.dtypes
+df.describe()
+```
+
+### Solution
+
+```python
+import pandas as pd
+
+data = {
+    "name": ["Alice", "Bob", "Charlie", "David"],
+    "age": [25, 30, 35, 28],
+    "salary": [50000, 60000, 75000, 55000]
+}
+
+df = pd.DataFrame(data)
+
+print(f"First 5 Rows:\n{df.head(5)}\n")
+print(f"Shape: {df.shape}\n")
+print(f"Columns: {df.columns}\n")
+print(f"Data Types For Each Column:\n{df.dtypes}\n")
+print(f"Basic Statistics:\n{df.describe()}")
+```
+
+### What This Solution Demonstrates
+
+- `pd.DataFrame(data)` creates a DataFrame from a dictionary.
+- `df.head(5)` displays up to five rows. This dataset contains four rows, so all four are displayed.
+- `df.shape` returns the number of rows and columns: `(4, 3)`.
+- `df.columns` displays the column labels.
+- `df.dtypes` displays each column's data type.
+- `df.describe()` summarizes the numeric columns with descriptive statistics.
+
+---
+
+## 22 — Select Columns
+
+**File:**
+
+```text
+22_PANDAS_selected_columns.py
+```
+
+### Problem
+
+Using the employee DataFrame, select the `name` column, the `salary` column, both `name` and `salary`, and both `age` and `salary`.
+
+### Concepts Practiced
+
+```text
+Single-column selection
+Multiple-column selection
+Pandas Series
+Pandas DataFrame
+df["column"]
+df[["column1", "column2"]]
+```
+
+### Solution
+
+```python
+import pandas as pd
+
+data = {
+    "name": ["Alice", "Bob", "Charlie", "David"],
+    "age": [25, 30, 35, 28],
+    "salary": [50000, 60000, 75000, 55000]
+}
+
+df = pd.DataFrame(data)
+
+print(df['name'])
+print(df['salary'])
+print(df[['name', 'salary']])
+print(df[['age', 'salary']])
+```
+
+### What This Solution Demonstrates
+
+- `df['name']` and `df['salary']` each return a one-dimensional Pandas Series.
+- `df[['name', 'salary']]` returns a DataFrame containing two columns.
+- `df[['age', 'salary']]` selects a different pair of columns.
+- The order of columns in the selection follows the order specified in the list.
+
+---
+
+## 23 — Filter Rows
+
+**File:**
+
+```text
+23_PANDAS_filter_rows.py
+```
+
+### Problem
+
+Using the employee data, find employees whose age is greater than 30, whose salary is greater than 60,000, whose salary is between 50,000 and 70,000, and whose age is greater than 25 **and** salary is greater than 55,000.
+
+### Concepts Practiced
+
+```text
+Boolean filtering
+Comparison operators
+Series.between()
+Combining conditions with &
+Boolean masks
+```
+
+### Solution
+
+```python
+import pandas as pd
+
+data = {
+    "name": ["Alice", "Bob", "Charlie", "David"],
+    "age": [25, 30, 35, 28],
+    "salary": [50000, 60000, 75000, 55000]
+}
+
+df = pd.DataFrame(data)
+
+print(df[df['age'] > 30])
+print(df[df['salary'] > 60000])
+print(df[df['salary'].between(50000, 70000)])
+print(df[(df['age'] > 25) & (df['salary'] > 55000)])
+```
+
+### What This Solution Demonstrates
+
+- `df[condition]` selects rows for which the condition evaluates to `True`.
+- `df['age'] > 30` filters employees older than 30.
+- `df['salary'] > 60000` filters employees earning more than 60,000.
+- `.between(50000, 70000)` includes both boundary values by default.
+- `&` combines conditions using **AND**. Each condition is wrapped in parentheses.
+
+### Expected Results
+
+- Age greater than 30: Charlie.
+- Salary greater than 60,000: Charlie.
+- Salary between 50,000 and 70,000: Alice, Bob, and David.
+- Age greater than 25 **and** salary greater than 55,000: Bob and Charlie.
+
+These first three Pandas exercises establish a workflow of creating a DataFrame, selecting relevant columns, and filtering rows using conditions.
+
+---
+
 # 📁 Project Structure
 
 Current repository structure:
@@ -1842,6 +2007,9 @@ Current repository structure:
 ├── 18_analyze_2d_dataset.py
 ├── 19_NUMPY_correlation.py
 ├── 20_NUMPY_mini_data_analysis_challenge.py
+├── 21_PANDAS_create_dataframe.py
+├── 22_PANDAS_selected_columns.py
+├── 23_PANDAS_filter_rows.py
 └── README.md
 ```
 
@@ -1854,8 +2022,10 @@ As additional questions are completed, each solution will be added as a separate
 ├── 03_filtering_with_boolean_indexing.py
 ├── 04_replace_values_using_conditions.py
 ├── ...
-├── 20_numpy_mini_data_analysis_challenge.py
-├── 21_create_a_dataframe.py
+├── 20_NUMPY_mini_data_analysis_challenge.py
+├── 21_PANDAS_create_dataframe.py
+├── 22_PANDAS_selected_columns.py
+├── 23_PANDAS_filter_rows.py
 ├── ...
 ├── 40_pandas_mini_ecommerce_analysis.py
 └── README.md
@@ -1870,10 +2040,10 @@ The filenames above represent the intended progression; files should be added as
 | Section   | Questions | Completed | Remaining |
 | --------- | --------: | --------: | --------: |
 | NumPy     |      1–20 |        20 |         0 |
-| Pandas    |     21–40 |         0 |        20 |
-| **Total** |  **1–40** |    **20** |    **20** |
+| Pandas    |     21–40 |         3 |        17 |
+| **Total** |  **1–40** |    **23** |    **17** |
 
-**Overall progress: 20 / 40 completed (50%)**
+**Overall progress: 23 / 40 completed (57.5%)**
 
 ---
 
@@ -2008,10 +2178,13 @@ This repository tracks the implementation of those exercises as individual Pytho
 18 — Analyze a 2D dataset              ✅
 19 — Correlation with NumPy            ✅
 20 — NumPy mini data-analysis challenge ✅
+21 — Create a DataFrame                ✅
+22 — Select columns                    ✅
+23 — Filter rows                       ✅
 ```
 
 ### Next Exercise
 
-**21 — Create a DataFrame**
+**24 — Sort Data**
 
-The Pandas section begins with DataFrame creation and inspection, including `head()`, `shape`, column names, data types, and descriptive statistics.
+The next task practices ordering DataFrame rows using Pandas `sort_values()`.
