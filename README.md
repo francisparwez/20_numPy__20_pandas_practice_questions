@@ -1981,6 +1981,57 @@ These first three Pandas exercises establish a workflow of creating a DataFrame,
 
 ---
 
+## 24 — Sort Data _(Pending)_
+
+**File:**
+
+```text
+24_PANDAS_sort_data.py
+```
+
+### Problem
+
+Using an employee DataFrame with `name`, `department`, `age`, and `salary` columns, practise sorting employees by:
+
+1. Salary in ascending order (lowest to highest).
+2. Salary in descending order (highest to lowest).
+3. Age in descending order (oldest to youngest).
+4. Department in ascending order, then salary in descending order within each department.
+
+### Concepts to Practise
+
+```text
+DataFrame.sort_values()
+ascending=True
+ascending=False
+Sorting by multiple columns
+Per-column sort directions
+```
+
+### Key Syntax
+
+```python
+df.sort_values(by="salary", ascending=True)
+df.sort_values(by="salary", ascending=False)
+df.sort_values(by="age", ascending=False)
+df.sort_values(
+    by=["department", "salary"],
+    ascending=[True, False]
+)
+```
+
+### What This Exercise Teaches
+
+- `sort_values()` orders rows based on one or more columns.
+- `ascending=True` sorts from lower to higher values or alphabetically.
+- `ascending=False` sorts from higher to lower values or reverse-alphabetically.
+- When sorting by multiple columns, the order of the columns in `by` determines the sorting priority.
+- Each item in `ascending` corresponds to the column in the same position in `by`. In the final task, departments are sorted alphabetically first, and salaries are sorted from highest to lowest within each department.
+
+**Status:** Pending — complete and verify the exercise before marking it as completed.
+
+---
+
 # 📁 Project Structure
 
 Current repository structure:
@@ -2010,6 +2061,7 @@ Current repository structure:
 ├── 21_PANDAS_create_dataframe.py
 ├── 22_PANDAS_selected_columns.py
 ├── 23_PANDAS_filter_rows.py
+├── 24_PANDAS_sort_data.py
 └── README.md
 ```
 
@@ -2026,6 +2078,7 @@ As additional questions are completed, each solution will be added as a separate
 ├── 21_PANDAS_create_dataframe.py
 ├── 22_PANDAS_selected_columns.py
 ├── 23_PANDAS_filter_rows.py
+├── 24_PANDAS_sort_data.py
 ├── ...
 ├── 40_pandas_mini_ecommerce_analysis.py
 └── README.md
@@ -2181,6 +2234,7 @@ This repository tracks the implementation of those exercises as individual Pytho
 21 — Create a DataFrame                ✅
 22 — Select columns                    ✅
 23 — Filter rows                       ✅
+24 — Sort data                         ⬜ Pending
 ```
 
 ### Next Exercise
