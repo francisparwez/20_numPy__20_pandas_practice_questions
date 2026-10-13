@@ -88,17 +88,17 @@ The Pandas section begins after the NumPy exercises and moves from DataFrame fun
 | 22  | Select columns            | `df["column"]`, `df[[...]]`                                   | ✅ Completed |
 | 23  | Filter rows               | Boolean filtering, multiple conditions                        | ✅ Completed |
 | 24  | Sort data                 | `sort_values()`                                               | ⬜ Pending   |
-| 25  | Create calculated columns | Vectorized column operations                                  | ⬜ Pending   |
+| 25  | Create calculated columns | Vectorized column operations                                  | ✅ Completed |
 
 ## Level P2 — Pandas Data Cleaning
 
-| #   | Practice Problem           | Main Concepts                              | Status     |
-| --- | -------------------------- | ------------------------------------------ | ---------- |
-| 26  | Handle missing values      | Missing-value detection, median imputation | ⬜ Pending |
-| 27  | Remove duplicates          | `duplicated()`, `drop_duplicates()`        | ⬜ Pending |
-| 28  | Convert data types         | Numeric conversion, type handling          | ⬜ Pending |
-| 29  | Clean categorical data     | String standardization, grouping           | ⬜ Pending |
-| 30  | Detect and handle outliers | IQR, filtering, cleaned DataFrame          | ⬜ Pending |
+| #   | Practice Problem           | Main Concepts                              | Status       |
+| --- | -------------------------- | ------------------------------------------ | ------------ |
+| 26  | Handle missing values      | Missing-value detection, median imputation | ✅ Completed |
+| 27  | Remove duplicates          | `duplicated()`, `drop_duplicates()`        | ✅ Completed |
+| 28  | Convert data types         | Numeric conversion, type handling          | ⬜ Pending   |
+| 29  | Clean categorical data     | String standardization, grouping           | ⬜ Pending   |
+| 30  | Detect and handle outliers | IQR, filtering, cleaned DataFrame          | ⬜ Pending   |
 
 ## Level P3 — Pandas Data Analysis
 
@@ -2032,6 +2032,224 @@ df.sort_values(
 
 ---
 
+## 25 — Create Calculated Columns
+
+**File:**
+
+```text
+25_PANDAS_create_calculated_columns.py
+```
+
+### Problem
+
+Using employee monthly salaries, create calculated columns for annual salary, tax, and net monthly salary.
+
+### Concepts Practiced
+
+```text
+Vectorized column operations
+Derived columns
+Percentage calculations
+Pandas Series arithmetic
+```
+
+### Solution
+
+```python
+import pandas as pd
+
+df = pd.DataFrame({
+    'employee': ['Alice', 'Bob', 'Charlie', 'David'],
+    'monthly_salary': [4500, 6000, 3200, 8500]
+})
+
+# Calculate annual salary
+df['annual_salary'] = df['monthly_salary'] * 12
+
+# Calculate tax amount (10% of monthly salary)
+df['tax'] = df['monthly_salary'] * 0.10
+
+# Calculate net monthly salary
+df['net_salary'] = df['monthly_salary'] - df['tax']
+
+print(df)
+```
+
+### What This Solution Demonstrates
+
+- `df['monthly_salary'] * 12` calculates annual salary for every employee.
+- `df['monthly_salary'] * 0.10` calculates a 10% monthly tax amount.
+- Subtracting `tax` from `monthly_salary` calculates net monthly salary.
+- Pandas applies these calculations to the entire column without requiring a loop.
+
+### Expected Results
+
+| Employee | Monthly Salary | Annual Salary | Tax (10%) | Net Monthly Salary |
+| -------- | -------------: | ------------: | --------: | -----------------: |
+| Alice    |          4,500 |        54,000 |       450 |              4,050 |
+| Bob      |          6,000 |        72,000 |       600 |              5,400 |
+| Charlie  |          3,200 |        38,400 |       320 |              2,880 |
+| David    |          8,500 |       102,000 |       850 |              7,650 |
+
+In this exercise, both `tax` and `net_salary` represent monthly amounts because the tax is calculated from `monthly_salary`.
+
+---
+
+## 26 — Handle Missing Values
+
+**File:**
+
+```text
+26_PANDAS_handle_missing_values.py
+```
+
+### Problem
+
+Given employee data with missing age and salary values:
+
+- Count missing values in each column.
+- Display rows containing at least one missing value.
+- Fill missing ages with the median age.
+- Fill missing salaries with the median salary.
+
+### Concepts Practiced
+
+```text
+df.isnull()
+df.isnull().sum()
+df.isnull().any(axis=1)
+Series.median()
+Series.fillna()
+Median imputation
+```
+
+### Solution
+
+```python
+import pandas as pd
+
+df = pd.DataFrame({
+    "name": ["Alice", "Bob", "Charlie", "David"],
+    "age": [25, None, 35, 28],
+    "salary": [50000, 60000, None, 55000]
+})
+
+# Number of missing values per column
+print(df.isnull().sum())
+
+# Rows containing missing values
+print(df[df.isnull().any(axis=1)])
+
+# Fill missing age and salary with their respective medians
+df['age'] = df['age'].fillna(df['age'].median())
+df['salary'] = df['salary'].fillna(df['salary'].median())
+
+print(df)
+```
+
+### What This Solution Demonstrates
+
+- `df.isnull().sum()` counts missing values column by column.
+- `df.isnull().any(axis=1)` identifies rows where at least one value is missing.
+- `df[df.isnull().any(axis=1)]` displays those rows rather than only returning a Boolean mask.
+- `fillna()` replaces missing values, and `median()` calculates the replacement value from the non-missing values in each column.
+- Assigning the result back to the column makes the update explicit.
+
+### Expected Results
+
+Before filling missing values, the missing-value counts are:
+
+```text
+name      0
+age       1
+salary    1
+```
+
+The rows containing missing values are Bob (missing age) and Charlie (missing salary).
+
+The replacement values are:
+
+- Median age: approximately `29.33`.
+- Median salary: `55000`.
+
+After imputation, all four rows have values for both `age` and `salary`.
+
+---
+
+## 27 — Remove Duplicates
+
+**File:**
+
+```text
+27_PANDAS_remove_duplicates.py
+```
+
+### Problem
+
+Given customer data with repeated rows:
+
+- Count the duplicate rows.
+- Display duplicate occurrences.
+- Remove duplicates.
+- Verify the final row count.
+
+### Concepts Practiced
+
+```text
+df.duplicated()
+df.duplicated().sum()
+df.drop_duplicates()
+len(df)
+```
+
+### Solution
+
+```python
+import pandas as pd
+
+# Sample customer data with duplicate rows
+data = {
+    "name": ["Alice", "Bob", "Alice", "Charlie", "Bob", "David"],
+    "email": [
+        "alice@email.com",
+        "bob@email.com",
+        "alice@email.com",
+        "charlie@email.com",
+        "bob@email.com",
+        "david@email.com"
+    ]
+}
+
+df = pd.DataFrame(data)
+
+print(f"Original number of rows: {len(df)}")
+print(f"Number of Duplicate Rows found: {df.duplicated().sum()}")
+print(f"Duplicate Rows:\n{df[df.duplicated()]}")
+
+df = df.drop_duplicates()
+print(f"Number of rows after removing duplicates: {len(df)}")
+```
+
+### What This Solution Demonstrates
+
+- `len(df)` returns the number of rows in the DataFrame.
+- `df.duplicated()` marks subsequent occurrences of fully duplicated rows as `True`; the first occurrence is retained by default.
+- `.sum()` counts the `True` values to calculate the number of duplicate rows.
+- `df[df.duplicated()]` displays only the duplicate occurrences.
+- `df.drop_duplicates()` removes repeated rows while keeping the first occurrence by default.
+
+### Expected Results
+
+```text
+Original number of rows: 6
+Number of Duplicate Rows found: 2
+Number of rows after removing duplicates: 4
+```
+
+Alice and Bob each appear twice with the same email, so two repeated rows are removed. By default, Pandas compares all columns when identifying duplicate rows.
+
+---
+
 # 📁 Project Structure
 
 Current repository structure:
@@ -2062,6 +2280,9 @@ Current repository structure:
 ├── 22_PANDAS_selected_columns.py
 ├── 23_PANDAS_filter_rows.py
 ├── 24_PANDAS_sort_data.py
+├── 25_PANDAS_create_calculated_columns.py
+├── 26_PANDAS_handle_missing_values.py
+├── 27_PANDAS_remove_duplicates.py
 └── README.md
 ```
 
@@ -2079,6 +2300,9 @@ As additional questions are completed, each solution will be added as a separate
 ├── 22_PANDAS_selected_columns.py
 ├── 23_PANDAS_filter_rows.py
 ├── 24_PANDAS_sort_data.py
+├── 25_PANDAS_create_calculated_columns.py
+├── 26_PANDAS_handle_missing_values.py
+├── 27_PANDAS_remove_duplicates.py
 ├── ...
 ├── 40_pandas_mini_ecommerce_analysis.py
 └── README.md
@@ -2093,10 +2317,10 @@ The filenames above represent the intended progression; files should be added as
 | Section   | Questions | Completed | Remaining |
 | --------- | --------: | --------: | --------: |
 | NumPy     |      1–20 |        20 |         0 |
-| Pandas    |     21–40 |         3 |        17 |
-| **Total** |  **1–40** |    **23** |    **17** |
+| Pandas    |     21–40 |         6 |        14 |
+| **Total** |  **1–40** |    **26** |    **14** |
 
-**Overall progress: 23 / 40 completed (57.5%)**
+**Overall progress: 26 / 40 completed (65%)**
 
 ---
 
@@ -2235,10 +2459,13 @@ This repository tracks the implementation of those exercises as individual Pytho
 22 — Select columns                    ✅
 23 — Filter rows                       ✅
 24 — Sort data                         ⬜ Pending
+25 — Create calculated columns         ✅
+26 — Handle missing values             ✅
+27 — Remove duplicates                 ✅
 ```
 
 ### Next Exercise
 
-**24 — Sort Data**
+**28 — Convert Data Types**
 
-The next task practices ordering DataFrame rows using Pandas `sort_values()`.
+The next task practises converting columns to appropriate data types using techniques such as `astype()` and `pd.to_numeric()`. Question 24 remains pending and can be completed later.
