@@ -2250,6 +2250,63 @@ Alice and Bob each appear twice with the same email, so two repeated rows are re
 
 ---
 
+## 28 — Convert Data Types
+
+**File:**
+
+```text
+28_PANDAS_convert_data_types.py
+```
+
+### Problem
+
+The `age` and `salary` columns contain numbers stored as strings. Convert both columns to numeric types, then calculate the average age and average salary.
+
+### Concepts Practiced
+
+```python
+pd.to_numeric()
+Series.mean()
+```
+
+### Solution
+
+```python
+import pandas as pd
+
+df = pd.DataFrame({
+    "age": ["25", "30", "35", "40"],
+    "salary": ["50000", "60000", "70000", "80000"]
+})
+
+# Convert age and salary to numeric types
+df["age"] = pd.to_numeric(df["age"])
+df["salary"] = pd.to_numeric(df["salary"])
+
+# Calculate average age and salary
+avg_age = df["age"].mean()
+avg_salary = df["salary"].mean()
+
+print(f"Average age: {avg_age}")
+print(f"Average salary: {avg_salary}")
+```
+
+### What This Solution Demonstrates
+
+- `pd.to_numeric()` converts values such as numeric strings into numeric values.
+- Converting the columns before calculating their means ensures Pandas treats the values as numbers rather than text.
+- `.mean()` calculates the arithmetic average of each numeric column.
+- `pd.to_numeric()` raises an error by default if a value cannot be converted. For messy data, `errors="coerce"` can convert invalid values to `NaN` so they can be handled separately.
+
+### Expected Results
+
+```text
+Average age: 32.5
+Average salary: 65000.0
+```
+
+---
+
 # 📁 Project Structure
 
 Current repository structure:
@@ -2283,6 +2340,7 @@ Current repository structure:
 ├── 25_PANDAS_create_calculated_columns.py
 ├── 26_PANDAS_handle_missing_values.py
 ├── 27_PANDAS_remove_duplicates.py
+├── 28_PANDAS_convert_data_types.py
 └── README.md
 ```
 
@@ -2303,6 +2361,7 @@ As additional questions are completed, each solution will be added as a separate
 ├── 25_PANDAS_create_calculated_columns.py
 ├── 26_PANDAS_handle_missing_values.py
 ├── 27_PANDAS_remove_duplicates.py
+├── 28_PANDAS_convert_data_types.py
 ├── ...
 ├── 40_pandas_mini_ecommerce_analysis.py
 └── README.md
@@ -2317,10 +2376,10 @@ The filenames above represent the intended progression; files should be added as
 | Section   | Questions | Completed | Remaining |
 | --------- | --------: | --------: | --------: |
 | NumPy     |      1–20 |        20 |         0 |
-| Pandas    |     21–40 |         6 |        14 |
-| **Total** |  **1–40** |    **26** |    **14** |
+| Pandas    |     21–40 |         7 |        13 |
+| **Total** |  **1–40** |    **27** |    **13** |
 
-**Overall progress: 26 / 40 completed (65%)**
+**Overall progress: 27 / 40 completed (67.5%)**
 
 ---
 
@@ -2462,10 +2521,11 @@ This repository tracks the implementation of those exercises as individual Pytho
 25 — Create calculated columns         ✅
 26 — Handle missing values             ✅
 27 — Remove duplicates                 ✅
+28 — Convert data types                 ✅
 ```
 
 ### Next Exercise
 
-**28 — Convert Data Types**
+**29 — Apply Functions**
 
-The next task practises converting columns to appropriate data types using techniques such as `astype()` and `pd.to_numeric()`. Question 24 remains pending and can be completed later.
+The next task practises applying a function across values or rows using Pandas. Question 24 remains pending and can be completed later.
