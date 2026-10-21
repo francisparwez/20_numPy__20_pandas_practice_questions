@@ -96,8 +96,8 @@ The Pandas section begins after the NumPy exercises and moves from DataFrame fun
 | --- | -------------------------- | ------------------------------------------ | ------------ |
 | 26  | Handle missing values      | Missing-value detection, median imputation | ✅ Completed |
 | 27  | Remove duplicates          | `duplicated()`, `drop_duplicates()`        | ✅ Completed |
-| 28  | Convert data types         | Numeric conversion, type handling          | ⬜ Pending   |
-| 29  | Clean categorical data     | String standardization, grouping           | ⬜ Pending   |
+| 28  | Convert data types         | Numeric conversion, type handling          | ✅ Completed |
+| 29  | Clean categorical data     | String standardization, frequency counts   | ✅ Completed |
 | 30  | Detect and handle outliers | IQR, filtering, cleaned DataFrame          | ⬜ Pending   |
 
 ## Level P3 — Pandas Data Analysis
@@ -2307,6 +2307,64 @@ Average salary: 65000.0
 
 ---
 
+## 29 — Clean Categorical Data
+
+**File:**
+
+```text
+29_PANDAS_clean_categorical_data.py
+```
+
+### Problem
+
+The `city` column contains inconsistent capitalization, such as `Karachi`, `karachi`, and `KARACHI`. Standardize the city names so each city has a consistent label, then count the customers in each city.
+
+### Concepts Practiced
+
+```python
+Series.str.capitalize()
+Series.value_counts()
+```
+
+### Solution
+
+```python
+import pandas as pd
+
+# Sample data
+data = {
+    "city": ["Karachi", "karachi", "KARACHI", "Lahore", "lahore", "Islamabad"]
+}
+
+df = pd.DataFrame(data)
+
+# Standardize city names by capitalizing the first letter and lowercasing the rest
+df["city"] = df["city"].str.capitalize()
+
+# Count customers per city
+city_counts = df["city"].value_counts()
+
+print(city_counts)
+```
+
+### What This Solution Demonstrates
+
+- `.str.capitalize()` standardizes capitalization, so variations such as `Karachi`, `karachi`, and `KARACHI` become `Karachi`.
+- `.value_counts()` counts the occurrences of each standardized city and sorts the counts from highest to lowest by default.
+- The solution handles the capitalization variations in the provided data. For real-world data, `.str.strip()` can also be used before capitalization to remove leading or trailing spaces.
+
+### Expected Results
+
+```text
+city
+Karachi      3
+Lahore       2
+Islamabad    1
+Name: count, dtype: int64
+```
+
+---
+
 # 📁 Project Structure
 
 Current repository structure:
@@ -2341,6 +2399,7 @@ Current repository structure:
 ├── 26_PANDAS_handle_missing_values.py
 ├── 27_PANDAS_remove_duplicates.py
 ├── 28_PANDAS_convert_data_types.py
+├── 29_PANDAS_clean_categorical_data.py
 └── README.md
 ```
 
@@ -2362,6 +2421,7 @@ As additional questions are completed, each solution will be added as a separate
 ├── 26_PANDAS_handle_missing_values.py
 ├── 27_PANDAS_remove_duplicates.py
 ├── 28_PANDAS_convert_data_types.py
+├── 29_PANDAS_clean_categorical_data.py
 ├── ...
 ├── 40_pandas_mini_ecommerce_analysis.py
 └── README.md
@@ -2376,10 +2436,10 @@ The filenames above represent the intended progression; files should be added as
 | Section   | Questions | Completed | Remaining |
 | --------- | --------: | --------: | --------: |
 | NumPy     |      1–20 |        20 |         0 |
-| Pandas    |     21–40 |         7 |        13 |
-| **Total** |  **1–40** |    **27** |    **13** |
+| Pandas    |     21–40 |         8 |        12 |
+| **Total** |  **1–40** |    **28** |    **12** |
 
-**Overall progress: 27 / 40 completed (67.5%)**
+**Overall progress: 28 / 40 completed (70%)**
 
 ---
 
@@ -2522,10 +2582,11 @@ This repository tracks the implementation of those exercises as individual Pytho
 26 — Handle missing values             ✅
 27 — Remove duplicates                 ✅
 28 — Convert data types                 ✅
+29 — Clean categorical data              ✅
 ```
 
 ### Next Exercise
 
-**29 — Apply Functions**
+**30 — Detect and Handle Outliers**
 
-The next task practises applying a function across values or rows using Pandas. Question 24 remains pending and can be completed later.
+The next task practises identifying outliers and filtering data using the IQR method. Question 24 remains pending and can be completed later.
