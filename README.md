@@ -98,7 +98,7 @@ The Pandas section begins after the NumPy exercises and moves from DataFrame fun
 | 27  | Remove duplicates          | `duplicated()`, `drop_duplicates()`        | ✅ Completed |
 | 28  | Convert data types         | Numeric conversion, type handling          | ✅ Completed |
 | 29  | Clean categorical data     | String standardization, frequency counts   | ✅ Completed |
-| 30  | Detect and handle outliers | IQR, filtering, cleaned DataFrame          | ⬜ Pending   |
+| 30  | Detect and handle outliers | IQR, Boolean filtering, cleaned DataFrame  | ✅ Completed |
 
 ## Level P3 — Pandas Data Analysis
 
@@ -2365,6 +2365,92 @@ Name: count, dtype: int64
 
 ---
 
+## 30 — Detect and Handle Outliers
+
+**File:**
+
+```text
+30_PANDAS_detect_and_handle_outliers.py
+```
+
+### Problem
+
+Use the Interquartile Range (IQR) method to calculate Q1, Q3, and IQR for employee salaries, identify values outside the IQR boundaries, and create a cleaned DataFrame without the outliers.
+
+### Concepts Practiced
+
+```python
+Series.quantile()
+Boolean indexing
+Series.index.isin()
+```
+
+### Solution
+
+```python
+import pandas as pd
+
+salary = [40000, 45000, 50000, 52000, 55000, 60000, 65000, 500000]
+
+df = pd.DataFrame({
+    "salary": salary
+})
+
+# Calculate Q1 and Q3
+q1 = df["salary"].quantile(0.25)
+q3 = df["salary"].quantile(0.75)
+iqr = q3 - q1
+
+# Identify outliers
+lower_bound = q1 - 1.5 * iqr
+upper_bound = q3 + 1.5 * iqr
+outliers = df[(df["salary"] < lower_bound) | (df["salary"] > upper_bound)]
+
+# Create a cleaned DataFrame without the outliers
+cleaned_df = df[~df.index.isin(outliers.index)]
+
+# Print results
+print("Original DataFrame:")
+print(df)
+print("\nQ1:", q1)
+print("Q3:", q3)
+print("IQR:", iqr)
+print("\nLower Bound:", lower_bound)
+print("Upper Bound:", upper_bound)
+print("\nOutliers:")
+print(outliers)
+print("\nCleaned DataFrame:")
+print(cleaned_df)
+```
+
+### What This Solution Demonstrates
+
+- `.quantile(0.25)` and `.quantile(0.75)` calculate Q1 and Q3.
+- The IQR is calculated as `Q3 - Q1`.
+- The outlier boundaries are `Q1 - 1.5 * IQR` and `Q3 + 1.5 * IQR`.
+- Boolean indexing identifies salaries below the lower bound or above the upper bound.
+- `index.isin()` combined with `~` excludes the outlier rows while preserving the original DataFrame.
+- Outliers should be investigated in real datasets before removal, since unusual values may still be valid observations.
+
+### Expected Results
+
+```text
+Q1: 48750.0
+Q3: 61250.0
+IQR: 12500.0
+
+Lower Bound: 30000.0
+Upper Bound: 80000.0
+
+Outliers:
+   salary
+7  500000
+```
+
+The cleaned DataFrame contains the seven salaries from `40000` through `65000`, excluding `500000`.
+
+---
+
 # 📁 Project Structure
 
 Current repository structure:
@@ -2400,6 +2486,7 @@ Current repository structure:
 ├── 27_PANDAS_remove_duplicates.py
 ├── 28_PANDAS_convert_data_types.py
 ├── 29_PANDAS_clean_categorical_data.py
+├── 30_PANDAS_detect_and_handle_outliers.py
 └── README.md
 ```
 
@@ -2422,6 +2509,7 @@ As additional questions are completed, each solution will be added as a separate
 ├── 27_PANDAS_remove_duplicates.py
 ├── 28_PANDAS_convert_data_types.py
 ├── 29_PANDAS_clean_categorical_data.py
+├── 30_PANDAS_detect_and_handle_outliers.py
 ├── ...
 ├── 40_pandas_mini_ecommerce_analysis.py
 └── README.md
@@ -2436,10 +2524,10 @@ The filenames above represent the intended progression; files should be added as
 | Section   | Questions | Completed | Remaining |
 | --------- | --------: | --------: | --------: |
 | NumPy     |      1–20 |        20 |         0 |
-| Pandas    |     21–40 |         8 |        12 |
-| **Total** |  **1–40** |    **28** |    **12** |
+| Pandas    |     21–40 |         9 |        11 |
+| **Total** |  **1–40** |    **29** |    **11** |
 
-**Overall progress: 28 / 40 completed (70%)**
+**Overall progress: 29 / 40 completed (72.5%)**
 
 ---
 
@@ -2577,16 +2665,17 @@ This repository tracks the implementation of those exercises as individual Pytho
 21 — Create a DataFrame                ✅
 22 — Select columns                    ✅
 23 — Filter rows                       ✅
-24 — Sort data                         ⬜ Pending
+24 — Sort data                         ✅
 25 — Create calculated columns         ✅
 26 — Handle missing values             ✅
 27 — Remove duplicates                 ✅
 28 — Convert data types                 ✅
 29 — Clean categorical data              ✅
+30 — Detect and handle outliers            ✅
 ```
 
 ### Next Exercise
 
-**30 — Detect and Handle Outliers**
+**31 — GroupBy Analysis**
 
-The next task practises identifying outliers and filtering data using the IQR method. Question 24 remains pending and can be completed later.
+The next task practises grouping rows by category and summarizing data with `groupby()`. Question 24 remains pending and can be completed later.
