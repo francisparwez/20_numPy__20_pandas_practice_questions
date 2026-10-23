@@ -102,13 +102,13 @@ The Pandas section begins after the NumPy exercises and moves from DataFrame fun
 
 ## Level P3 — Pandas Data Analysis
 
-| #   | Practice Problem              | Main Concepts                         | Status     |
-| --- | ----------------------------- | ------------------------------------- | ---------- |
-| 31  | GroupBy analysis              | `groupby()`                           | ⬜ Pending |
-| 32  | Multiple aggregations         | `.agg()`                              | ⬜ Pending |
-| 33  | GroupBy with multiple columns | Multi-level grouping                  | ⬜ Pending |
-| 34  | Value counts                  | `value_counts()`, percentages         | ⬜ Pending |
-| 35  | Date/time analysis            | `datetime`, year, month, day, weekday | ⬜ Pending |
+| #   | Practice Problem              | Main Concepts                                | Status       |
+| --- | ----------------------------- | -------------------------------------------- | ------------ |
+| 31  | GroupBy analysis              | `groupby()`, `sum()`, `mean()`, `size()`     | ✅ Completed |
+| 32  | Multiple aggregations         | `groupby()`, named `.agg()`, `reset_index()` | ✅ Completed |
+| 33  | GroupBy with multiple columns | Multi-level grouping                         | ⬜ Pending   |
+| 34  | Value counts                  | `value_counts()`, percentages                | ⬜ Pending   |
+| 35  | Date/time analysis            | `datetime`, year, month, day, weekday        | ⬜ Pending   |
 
 ## Level P4 — Intermediate Analytics
 
@@ -2451,6 +2451,198 @@ The cleaned DataFrame contains the seven salaries from `40000` through `65000`, 
 
 ---
 
+## 31 — GroupBy Analysis
+
+**File:**
+
+```text
+31_PANDAS_groupby_analysis.py
+```
+
+### Problem
+
+Given sales data containing `City`, `Product`, and `Sales`, calculate:
+
+- Total sales by city.
+- Average sales by city.
+- Total sales by product.
+- Number of transactions by city.
+
+### Concepts Practiced
+
+```text
+DataFrame.groupby()
+Series.sum()
+Series.mean()
+DataFrameGroupBy.size()
+round()
+```
+
+### Solution
+
+```python
+import pandas as pd
+
+df = pd.DataFrame({
+    "City": [
+        "Karachi", "Lahore", "Karachi", "Islamabad",
+        "Lahore", "Karachi", "Islamabad", "Lahore"
+    ],
+    "Product": [
+        "Laptop", "Mobile", "Mobile", "Laptop",
+        "Laptop", "Laptop", "Mobile", "Mobile"
+    ],
+    "Sales": [
+        100000, 50000, 30000, 90000,
+        80000, 120000, 40000, 60000
+    ]
+})
+
+print(df)
+print("\nDataFrame shape:", df.shape)
+
+sum_of_sales_by_city = df.groupby("City")["Sales"].sum()
+avg_of_sales_by_city = round(df.groupby("City")["Sales"].mean(), 2)
+sum_of_sales_by_product = df.groupby("Product")["Sales"].sum()
+transactions_by_city = df.groupby("City").size()
+
+print(f"Total Sales By City:\n{sum_of_sales_by_city}")
+print(f"Average Sales By City:\n{avg_of_sales_by_city}")
+print(f"Total Sales By Product:\n{sum_of_sales_by_product}")
+print(f"Number of Transactions By City:\n{transactions_by_city}")
+```
+
+### What This Solution Demonstrates
+
+- `groupby("City")` groups rows by city so that sales can be summarized for each city.
+- `.sum()` calculates total sales, while `.mean()` calculates average sales within each group.
+- Grouping by `"Product"` and applying `.sum()` calculates total sales for each product.
+- `.size()` counts the rows in each city group, giving the number of transactions.
+- `round(..., 2)` rounds the average sales to two decimal places.
+
+### Expected Results
+
+**Total sales by city:**
+
+```text
+City
+Islamabad    130000
+Karachi      250000
+Lahore       190000
+```
+
+**Average sales by city:**
+
+```text
+City
+Islamabad    65000.00
+Karachi      83333.33
+Lahore       63333.33
+```
+
+**Total sales by product:**
+
+```text
+Product
+Laptop    390000
+Mobile    180000
+```
+
+**Number of transactions by city:**
+
+```text
+City
+Islamabad    2
+Karachi      3
+Lahore       3
+```
+
+This exercise reinforces grouping and aggregation in Pandas, using the same analytical pattern as SQL `GROUP BY`.
+
+---
+
+## 32 — Multiple Aggregations
+
+**File:**
+
+```text
+32_PANDAS_multiple_aggregation.py
+```
+
+### Problem
+
+Using sales data containing `TransactionID`, `City`, and `Sales`, group the data by city and calculate:
+
+- Total sales.
+- Average sales.
+- Minimum sale.
+- Maximum sale.
+- Number of transactions.
+
+### Concepts Practiced
+
+```text
+DataFrame.groupby()
+DataFrameGroupBy.agg()
+Named aggregation
+sum()
+mean()
+min()
+max()
+count()
+reset_index()
+```
+
+### Solution
+
+```python
+import pandas as pd
+
+df = pd.DataFrame({
+    'TransactionID': [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    'City': [
+        'New York', 'Los Angeles', 'Chicago', 'New York',
+        'Los Angeles', 'Chicago', 'New York', 'Los Angeles', 'Chicago'
+    ],
+    'Sales': [100, 200, 150, 300, 400, 250, 500, 600, 350]
+})
+
+summary_df = (
+    df.groupby('City')
+    .agg(
+        Total_Sales=('Sales', 'sum'),
+        Average_Sales=('Sales', 'mean'),
+        Minimum_Sale=('Sales', 'min'),
+        Maximum_Sale=('Sales', 'max'),
+        Number_of_Transactions=('TransactionID', 'count')
+    )
+    .reset_index()
+)
+
+print(summary_df)
+```
+
+### What This Solution Demonstrates
+
+- `groupby('City')` creates one group for each distinct city.
+- `.agg()` calculates several summary metrics in one operation.
+- Named aggregation assigns readable names to the resulting columns and specifies the source column and aggregation function for each metric.
+- `sum`, `mean`, `min`, and `max` summarize the `Sales` values.
+- `count` counts non-missing transaction IDs in each city.
+- `.reset_index()` returns `City` to a regular column in the result.
+
+### Expected Results
+
+| City        | Total_Sales | Average_Sales | Minimum_Sale | Maximum_Sale | Number_of_Transactions |
+| ----------- | ----------: | ------------: | -----------: | -----------: | ---------------------: |
+| Chicago     |         750 |         250.0 |          150 |          350 |                      3 |
+| Los Angeles |        1200 |         400.0 |          200 |          600 |                      3 |
+| New York    |         900 |         300.0 |          100 |          500 |                      3 |
+
+This exercise demonstrates how Pandas named aggregation can produce a compact city-level summary, similar to a SQL query using `GROUP BY` with multiple aggregate functions.
+
+---
+
 # 📁 Project Structure
 
 Current repository structure:
@@ -2487,6 +2679,8 @@ Current repository structure:
 ├── 28_PANDAS_convert_data_types.py
 ├── 29_PANDAS_clean_categorical_data.py
 ├── 30_PANDAS_detect_and_handle_outliers.py
+├── 31_PANDAS_groupby_analysis.py
+├── 32_PANDAS_multiple_aggregation.py
 └── README.md
 ```
 
@@ -2510,6 +2704,8 @@ As additional questions are completed, each solution will be added as a separate
 ├── 28_PANDAS_convert_data_types.py
 ├── 29_PANDAS_clean_categorical_data.py
 ├── 30_PANDAS_detect_and_handle_outliers.py
+├── 31_PANDAS_groupby_analysis.py
+├── 32_PANDAS_multiple_aggregation.py
 ├── ...
 ├── 40_pandas_mini_ecommerce_analysis.py
 └── README.md
@@ -2524,10 +2720,10 @@ The filenames above represent the intended progression; files should be added as
 | Section   | Questions | Completed | Remaining |
 | --------- | --------: | --------: | --------: |
 | NumPy     |      1–20 |        20 |         0 |
-| Pandas    |     21–40 |         9 |        11 |
-| **Total** |  **1–40** |    **29** |    **11** |
+| Pandas    |     21–40 |        11 |         9 |
+| **Total** |  **1–40** |    **31** |     **9** |
 
-**Overall progress: 29 / 40 completed (72.5%)**
+**Overall progress: 31 / 40 completed (77.5%)**
 
 ---
 
@@ -2669,13 +2865,15 @@ This repository tracks the implementation of those exercises as individual Pytho
 25 — Create calculated columns         ✅
 26 — Handle missing values             ✅
 27 — Remove duplicates                 ✅
-28 — Convert data types                 ✅
-29 — Clean categorical data              ✅
-30 — Detect and handle outliers            ✅
+28 — Convert data types                ✅
+29 — Clean categorical data             ✅
+30 — Detect and handle outliers         ✅
+31 — GroupBy analysis                   ✅
+32 — Multiple aggregations              ✅
 ```
 
 ### Next Exercise
 
-**31 — GroupBy Analysis**
+**33 — GroupBy with Multiple Columns**
 
-The next task practises grouping rows by category and summarizing data with `groupby()`. Question 24 remains pending and can be completed later.
+The next task practises grouping data by more than one column. Question 24 remains pending and can be completed later.
