@@ -106,8 +106,8 @@ The Pandas section begins after the NumPy exercises and moves from DataFrame fun
 | --- | ----------------------------- | -------------------------------------------- | ------------ |
 | 31  | GroupBy analysis              | `groupby()`, `sum()`, `mean()`, `size()`     | ✅ Completed |
 | 32  | Multiple aggregations         | `groupby()`, named `.agg()`, `reset_index()` | ✅ Completed |
-| 33  | GroupBy with multiple columns | Multi-level grouping                         | ⬜ Pending   |
-| 34  | Value counts                  | `value_counts()`, percentages                | ⬜ Pending   |
+| 33  | GroupBy with multiple columns | Multi-level grouping                         | ✅ Completed |
+| 34  | Value counts                  | `value_counts()`, percentages                | ✅ Completed |
 | 35  | Date/time analysis            | `datetime`, year, month, day, weekday        | ⬜ Pending   |
 
 ## Level P4 — Intermediate Analytics
@@ -2643,6 +2643,137 @@ This exercise demonstrates how Pandas named aggregation can produce a compact ci
 
 ---
 
+---
+
+## 33 — GroupBy with Multiple Columns
+
+**File:**
+
+```text
+33_PANDAS_groupby_with_multiple_columns.py
+```
+
+### Problem
+
+Using data containing `City`, `Product`, and `Sales`, calculate total sales for each city-product combination.
+
+### Concepts Practiced
+
+```text
+DataFrame.groupby()
+Grouping by multiple columns
+sum()
+reset_index()
+Named output column
+```
+
+### Solution
+
+```python
+import pandas as pd
+
+df = pd.DataFrame({
+    'City': ['Karachi', 'Karachi', 'Lahore', 'Lahore', 'Karachi', 'Lahore'],
+    'Product': ['Laptop', 'Phone', 'Laptop', 'Phone', 'Laptop', 'Laptop'],
+    'Sales': [500000, 300000, 400000, 200000, 500000, 400000]
+})
+
+result = (
+    df.groupby(['City', 'Product'])['Sales']
+      .sum()
+      .reset_index(name='Total_Sales')
+)
+
+print(f"Original DataFrame:\n{df}\n")
+print(f"Grouped DataFrame:\n{result}\n")
+```
+
+### What This Solution Demonstrates
+
+- `groupby(['City', 'Product'])` creates a group for each unique city-product combination.
+- `['Sales']` selects the measure to aggregate, and `.sum()` calculates total sales within each group.
+- `.reset_index(name='Total_Sales')` returns the grouping columns as regular columns and names the aggregated result `Total_Sales`.
+
+### Expected Results
+
+| City    | Product | Total_Sales |
+| ------- | ------- | ----------: |
+| Karachi | Laptop  |     1000000 |
+| Karachi | Phone   |      300000 |
+| Lahore  | Laptop  |      800000 |
+| Lahore  | Phone   |      200000 |
+
+This exercise reinforces multi-level grouping in Pandas, equivalent to SQL `GROUP BY City, Product`.
+
+---
+
+## 34 — Value Counts
+
+**File:**
+
+```text
+34_PANDAS_value_counts.py
+```
+
+### Problem
+
+Given an order-status column, calculate the number and percentage of orders in each status, then identify the most common status.
+
+### Concepts Practiced
+
+```text
+Series.value_counts()
+normalize=True
+Relative frequency and percentages
+DataFrame()
+round()
+idxmax()
+```
+
+### Solution
+
+```python
+import pandas as pd
+
+df = pd.DataFrame({
+    'status': ['Completed', 'Pending', 'Completed', 'Cancelled', 'Completed', 'Pending']
+})
+
+count = df['status'].value_counts()
+percentage = df['status'].value_counts(normalize=True) * 100
+
+summary_df = pd.DataFrame({
+    'Order Count': count,
+    'Percentage (%)': round(percentage, 2)
+})
+
+most_common_status = count.idxmax()
+
+print("--- Frequency Table Summary ---")
+print(summary_df)
+print("\n--- Analytics Conclusion ---")
+print(f"The most common status is: '{most_common_status}' with {count[most_common_status]} occurrences.")
+```
+
+### What This Solution Demonstrates
+
+- `value_counts()` counts occurrences of each status, ordered from most frequent to least frequent by default.
+- `value_counts(normalize=True) * 100` calculates the percentage of orders in each category.
+- The count and percentage Series are combined into one summary DataFrame and percentages are rounded to two decimal places.
+- `idxmax()` returns the status with the highest count.
+
+### Expected Results
+
+| Status    | Order Count | Percentage (%) |
+| --------- | ----------: | -------------: |
+| Completed |           3 |          50.00 |
+| Pending   |           2 |          33.33 |
+| Cancelled |           1 |          16.67 |
+
+**Most common status:** `Completed`, with 3 occurrences.
+
+This exercise reinforces categorical frequency analysis, percentage calculations, and identifying the most common category in a dataset.
+
 # 📁 Project Structure
 
 Current repository structure:
@@ -2681,6 +2812,8 @@ Current repository structure:
 ├── 30_PANDAS_detect_and_handle_outliers.py
 ├── 31_PANDAS_groupby_analysis.py
 ├── 32_PANDAS_multiple_aggregation.py
+├── 33_PANDAS_groupby_with_multiple_columns.py
+├── 34_PANDAS_value_counts.py
 └── README.md
 ```
 
@@ -2706,6 +2839,8 @@ As additional questions are completed, each solution will be added as a separate
 ├── 30_PANDAS_detect_and_handle_outliers.py
 ├── 31_PANDAS_groupby_analysis.py
 ├── 32_PANDAS_multiple_aggregation.py
+├── 33_PANDAS_groupby_with_multiple_columns.py
+├── 34_PANDAS_value_counts.py
 ├── ...
 ├── 40_pandas_mini_ecommerce_analysis.py
 └── README.md
@@ -2720,10 +2855,10 @@ The filenames above represent the intended progression; files should be added as
 | Section   | Questions | Completed | Remaining |
 | --------- | --------: | --------: | --------: |
 | NumPy     |      1–20 |        20 |         0 |
-| Pandas    |     21–40 |        11 |         9 |
-| **Total** |  **1–40** |    **31** |     **9** |
+| Pandas    |     21–40 |        13 |         7 |
+| **Total** |  **1–40** |    **33** |     **7** |
 
-**Overall progress: 31 / 40 completed (77.5%)**
+**Overall progress: 33 / 40 completed (82.5%)**
 
 ---
 
@@ -2870,10 +3005,12 @@ This repository tracks the implementation of those exercises as individual Pytho
 30 — Detect and handle outliers         ✅
 31 — GroupBy analysis                   ✅
 32 — Multiple aggregations              ✅
+33 — GroupBy with Multiple Columns       ✅
+34 — Value counts                        ✅
 ```
 
 ### Next Exercise
 
-**33 — GroupBy with Multiple Columns**
+**35 — Date/time analysis**
 
-The next task practises grouping data by more than one column. Question 24 remains pending and can be completed later.
+The next task practises extracting and analysing date components. Question 24 remains pending and can be completed later.
