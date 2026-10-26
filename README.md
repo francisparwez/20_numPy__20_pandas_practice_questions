@@ -87,7 +87,7 @@ The Pandas section begins after the NumPy exercises and moves from DataFrame fun
 | 21  | Create a DataFrame        | `DataFrame`, `head()`, `shape`, columns, `dtypes`, statistics | ✅ Completed |
 | 22  | Select columns            | `df["column"]`, `df[[...]]`                                   | ✅ Completed |
 | 23  | Filter rows               | Boolean filtering, multiple conditions                        | ✅ Completed |
-| 24  | Sort data                 | `sort_values()`                                               | ⬜ Pending   |
+| 24  | Sort data                 | `sort_values()`                                               | ✅ Completed |
 | 25  | Create calculated columns | Vectorized column operations                                  | ✅ Completed |
 
 ## Level P2 — Pandas Data Cleaning
@@ -102,13 +102,13 @@ The Pandas section begins after the NumPy exercises and moves from DataFrame fun
 
 ## Level P3 — Pandas Data Analysis
 
-| #   | Practice Problem              | Main Concepts                                | Status       |
-| --- | ----------------------------- | -------------------------------------------- | ------------ |
-| 31  | GroupBy analysis              | `groupby()`, `sum()`, `mean()`, `size()`     | ✅ Completed |
-| 32  | Multiple aggregations         | `groupby()`, named `.agg()`, `reset_index()` | ✅ Completed |
-| 33  | GroupBy with multiple columns | Multi-level grouping                         | ✅ Completed |
-| 34  | Value counts                  | `value_counts()`, percentages                | ✅ Completed |
-| 35  | Date/time analysis            | `datetime`, year, month, day, weekday        | ⬜ Pending   |
+| #   | Practice Problem              | Main Concepts                                                        | Status       |
+| --- | ----------------------------- | -------------------------------------------------------------------- | ------------ |
+| 31  | GroupBy analysis              | `groupby()`, `sum()`, `mean()`, `size()`                             | ✅ Completed |
+| 32  | Multiple aggregations         | `groupby()`, named `.agg()`, `reset_index()`                         | ✅ Completed |
+| 33  | GroupBy with multiple columns | Multi-level grouping                                                 | ✅ Completed |
+| 34  | Value counts                  | `value_counts()`, percentages                                        | ✅ Completed |
+| 35  | Date/time analysis            | `to_datetime()`, `.dt` accessors, `groupby()`, chronological sorting | ✅ Completed |
 
 ## Level P4 — Intermediate Analytics
 
@@ -2774,6 +2774,90 @@ print(f"The most common status is: '{most_common_status}' with {count[most_commo
 
 This exercise reinforces categorical frequency analysis, percentage calculations, and identifying the most common category in a dataset.
 
+---
+
+## 35 — Date/Time Analysis
+
+**File:**
+
+```text
+35_PANDAS_date__time_analysis.py
+```
+
+### Problem
+
+Convert the `order_date` column to datetime, extract the year, month, month name, day, and weekday name, then calculate monthly order counts in calendar order.
+
+### Concepts Practiced
+
+```text
+pd.to_datetime()
+Datetime accessor (.dt)
+.dt.year, .dt.month, .dt.day
+.dt.day_name(), .dt.month_name()
+groupby()
+count()
+sort_values()
+reset_index()
+set_index()
+```
+
+### Solution
+
+```python
+import pandas as pd
+
+df = pd.DataFrame({
+    'order_date': [
+        '2026-01-05', '2026-01-17', '2026-02-03',
+        '2026-02-20', '2026-03-10'
+    ]
+})
+
+# Convert the column to datetime
+df['order_date'] = pd.to_datetime(df['order_date'])
+
+# Create date-component columns
+df['day'] = df['order_date'].dt.day
+df['month'] = df['order_date'].dt.month
+df['year'] = df['order_date'].dt.year
+df['day_of_week'] = df['order_date'].dt.day_name()
+df['month_name'] = df['order_date'].dt.month_name()
+
+# Calculate monthly order counts in calendar order
+monthly_order_counts = (
+    df.groupby(['month', 'month_name'])['order_date']
+      .count()
+      .reset_index(name='order_count')
+      .sort_values('month')
+      .set_index('month_name')['order_count']
+)
+
+print(df)
+print("\nMonthly Order Counts:")
+print(monthly_order_counts)
+```
+
+### What This Solution Demonstrates
+
+- `pd.to_datetime()` converts the date strings into Pandas datetime values.
+- The `.dt` accessor extracts date components, including numeric year/month/day values and readable weekday and month names.
+- `groupby(['month', 'month_name'])` groups orders by month number and its corresponding name; `count()` calculates the number of orders in each group.
+- `sort_values('month')` ensures months are displayed chronologically rather than alphabetically. Using the numeric month column makes the ordering dynamic, without hardcoding month names.
+- `reset_index()`, `set_index()`, and column selection shape the result into a readable Series indexed by month name.
+
+### Expected Monthly Order Counts
+
+| Month    | Order Count |
+| -------- | ----------: |
+| January  |           2 |
+| February |           2 |
+| March    |           1 |
+
+This exercise reinforces date conversion, date-component extraction, and chronological monthly aggregation—important skills for analysing order trends over time.
+
+---
+
 # 📁 Project Structure
 
 Current repository structure:
@@ -2855,10 +2939,10 @@ The filenames above represent the intended progression; files should be added as
 | Section   | Questions | Completed | Remaining |
 | --------- | --------: | --------: | --------: |
 | NumPy     |      1–20 |        20 |         0 |
-| Pandas    |     21–40 |        13 |         7 |
-| **Total** |  **1–40** |    **33** |     **7** |
+| Pandas    |     21–40 |        15 |         5 |
+| **Total** |  **1–40** |    **35** |     **5** |
 
-**Overall progress: 33 / 40 completed (82.5%)**
+**Overall progress: 35 / 40 completed (87.5%)**
 
 ---
 
@@ -3007,10 +3091,11 @@ This repository tracks the implementation of those exercises as individual Pytho
 32 — Multiple aggregations              ✅
 33 — GroupBy with Multiple Columns       ✅
 34 — Value counts                        ✅
+35 — Date/time analysis                  ✅
 ```
 
 ### Next Exercise
 
-**35 — Date/time analysis**
+**36 — Merge two DataFrames**
 
-The next task practises extracting and analysing date components. Question 24 remains pending and can be completed later.
+The next task practises combining DataFrames using a merge operation, equivalent to a SQL JOIN. Q24 — Sort data is completed.
