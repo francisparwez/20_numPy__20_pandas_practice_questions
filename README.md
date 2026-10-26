@@ -112,13 +112,13 @@ The Pandas section begins after the NumPy exercises and moves from DataFrame fun
 
 ## Level P4 — Intermediate Analytics
 
-| #   | Practice Problem                 | Main Concepts                                            | Status     |
-| --- | -------------------------------- | -------------------------------------------------------- | ---------- |
-| 36  | Merge two DataFrames             | `merge()`, SQL JOIN equivalent                           | ⬜ Pending |
-| 37  | Find customers with no orders    | LEFT JOIN equivalent, `indicator=True`                   | ⬜ Pending |
-| 38  | Running total and moving average | `.cumsum()`, `.rolling()`                                | ⬜ Pending |
-| 39  | Customer analytics               | Aggregation, ranking, customer metrics                   | ⬜ Pending |
-| 40  | Pandas mini e-commerce analysis  | KPIs, customers, products, geography, time, data quality | ⬜ Pending |
+| #   | Practice Problem                 | Main Concepts                                            | Status       |
+| --- | -------------------------------- | -------------------------------------------------------- | ------------ |
+| 36  | Merge two DataFrames             | `merge()`, `groupby()`, `sum()`, SQL JOIN equivalent     | ✅ Completed |
+| 37  | Find customers with no orders    | LEFT JOIN equivalent, `indicator=True`                   | ⬜ Pending   |
+| 38  | Running total and moving average | `.cumsum()`, `.rolling()`                                | ⬜ Pending   |
+| 39  | Customer analytics               | Aggregation, ranking, customer metrics                   | ⬜ Pending   |
+| 40  | Pandas mini e-commerce analysis  | KPIs, customers, products, geography, time, data quality | ⬜ Pending   |
 
 ---
 
@@ -2856,6 +2856,83 @@ print(monthly_order_counts)
 
 This exercise reinforces date conversion, date-component extraction, and chronological monthly aggregation—important skills for analysing order trends over time.
 
+## 36 — Merge Two DataFrames
+
+**File:**
+
+```text
+36_PANDAS_merge_two_dataframes.py
+```
+
+### Problem
+
+Create customer and order DataFrames, merge them using `customer_id`, and calculate the total spending for each customer.
+
+### Concepts Practiced
+
+```text
+pd.DataFrame()
+DataFrame.merge()
+Join key (`on='customer_id'`)
+groupby()
+sum()
+reset_index()
+SQL INNER JOIN equivalent
+```
+
+### Solution
+
+```python
+import pandas as pd
+
+# Customers DataFrame
+df1 = pd.DataFrame({
+    'customer_id': [101, 102, 103, 104, 105],
+    'customer_name': ['Ali', 'Sara', 'Ahmed', 'Ayesha', 'Usman'],
+    'city': ['Karachi', 'Lahore', 'Islamabad', 'Karachi', 'Multan']
+})
+
+# Orders DataFrame
+df2 = pd.DataFrame({
+    'order_id': [1, 2, 3, 4, 5, 6, 7, 8],
+    'customer_id': [101, 102, 101, 103, 102, 104, 105, 101],
+    'amount': [5000, 3000, 2500, 4000, 1500, 6000, 2000, 1000]
+})
+
+df = df1.merge(df2, on='customer_id')
+
+print(f"Original Dataframes:\n{df1}\n\n{df2}\n")
+print(f"Merged Dataframes:\n{df}\n")
+
+spending_by_customer = (
+    df.groupby(['customer_id', 'customer_name'])['amount']
+      .sum()
+      .reset_index(name='total_spending')
+)
+print(f'Total Spending By Each Customer:\n{spending_by_customer}')
+```
+
+### What This Solution Demonstrates
+
+- `df1.merge(df2, on='customer_id')` combines customer details with matching order records using the shared customer ID. Since `how` is omitted, Pandas uses an inner join by default.
+- A customer with multiple orders appears on multiple rows in the merged DataFrame, allowing every order to contribute to the total.
+- `groupby(['customer_id', 'customer_name'])['amount'].sum()` calculates the sum of order amounts for each customer.
+- `reset_index(name='total_spending')` returns the grouped result as a DataFrame with a clearly named spending column.
+
+### Expected Total Spending
+
+| customer_id | customer_name | total_spending |
+| ----------: | ------------- | -------------: |
+|         101 | Ali           |          8,500 |
+|         102 | Sara          |          4,500 |
+|         103 | Ahmed         |          4,000 |
+|         104 | Ayesha        |          6,000 |
+|         105 | Usman         |          2,000 |
+
+This exercise connects Pandas `merge()`, `groupby()`, and `sum()` with the SQL workflow of an `INNER JOIN` followed by `GROUP BY` and `SUM()`.
+
+---
+
 ---
 
 # 📁 Project Structure
@@ -2898,6 +2975,8 @@ Current repository structure:
 ├── 32_PANDAS_multiple_aggregation.py
 ├── 33_PANDAS_groupby_with_multiple_columns.py
 ├── 34_PANDAS_value_counts.py
+├── 35_PANDAS_date__time_analysis.py
+├── 36_PANDAS_merge_two_dataframes.py
 └── README.md
 ```
 
@@ -2925,6 +3004,8 @@ As additional questions are completed, each solution will be added as a separate
 ├── 32_PANDAS_multiple_aggregation.py
 ├── 33_PANDAS_groupby_with_multiple_columns.py
 ├── 34_PANDAS_value_counts.py
+├── 35_PANDAS_date__time_analysis.py
+├── 36_PANDAS_merge_two_dataframes.py
 ├── ...
 ├── 40_pandas_mini_ecommerce_analysis.py
 └── README.md
@@ -2939,10 +3020,10 @@ The filenames above represent the intended progression; files should be added as
 | Section   | Questions | Completed | Remaining |
 | --------- | --------: | --------: | --------: |
 | NumPy     |      1–20 |        20 |         0 |
-| Pandas    |     21–40 |        15 |         5 |
-| **Total** |  **1–40** |    **35** |     **5** |
+| Pandas    |     21–40 |        16 |         4 |
+| **Total** |  **1–40** |    **36** |     **4** |
 
-**Overall progress: 35 / 40 completed (87.5%)**
+**Overall progress: 36 / 40 completed (90%)**
 
 ---
 
@@ -3092,10 +3173,11 @@ This repository tracks the implementation of those exercises as individual Pytho
 33 — GroupBy with Multiple Columns       ✅
 34 — Value counts                        ✅
 35 — Date/time analysis                  ✅
+36 — Merge two DataFrames                ✅
 ```
 
 ### Next Exercise
 
-**36 — Merge two DataFrames**
+**37 — Find customers with no orders**
 
-The next task practises combining DataFrames using a merge operation, equivalent to a SQL JOIN. Q24 — Sort data is completed.
+The next task practises identifying customers without matching orders using a left-join approach. Q24 — Sort data and Q36 — Merge two DataFrames are completed.
