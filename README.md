@@ -116,7 +116,7 @@ The Pandas section begins after the NumPy exercises and moves from DataFrame fun
 | --- | -------------------------------- | -------------------------------------------------------- | ------------ |
 | 36  | Merge two DataFrames             | `merge()`, `groupby()`, `sum()`, SQL JOIN equivalent     | ✅ Completed |
 | 37  | Find customers with no orders    | `merge(how='left')`, `indicator=True`, Boolean filtering | ✅ Completed |
-| 38  | Running total and moving average | `.cumsum()`, `.rolling()`                                | ⬜ Pending   |
+| 38  | Running total and moving average | `.cumsum()`, `.rolling()`, `.mean()`                     | ✅ Completed |
 | 39  | Customer analytics               | Aggregation, ranking, customer metrics                   | ⬜ Pending   |
 | 40  | Pandas mini e-commerce analysis  | KPIs, customers, products, geography, time, data quality | ⬜ Pending   |
 
@@ -3004,6 +3004,75 @@ This exercise connects Pandas left merges and indicator-based filtering with the
 
 ---
 
+## 38 — Running Total and Moving Average
+
+**File:**
+
+```text
+38_PANDAS_running_total_and_moving_average.py
+```
+
+### Problem
+
+Create a daily sales DataFrame and calculate cumulative sales and a 3-day moving average.
+
+### Concepts Practiced
+
+```text
+pd.DataFrame()
+Cumulative sum with .cumsum()
+Rolling windows with .rolling()
+Rolling mean with .mean()
+SQL window-function equivalents
+```
+
+### Solution
+
+```python
+import pandas as pd
+
+df = pd.DataFrame({
+    'date': [
+        '2026-10-01',
+        '2026-10-02',
+        '2026-10-03',
+        '2026-10-04',
+        '2026-10-05',
+        '2026-10-06',
+        '2026-10-07'
+    ],
+    'sales': [1000, 1500, 800, 2000, 1200, 1800, 900]
+})
+
+df['cumulative_sales'] = df['sales'].cumsum()
+df['moving_average_3day'] = df['sales'].rolling(window=3).mean()
+
+print(df)
+```
+
+### What This Solution Demonstrates
+
+- `df['sales'].cumsum()` calculates the running total of sales, adding each day's sales to the total from previous rows.
+- `df['sales'].rolling(window=3).mean()` calculates the average sales across each three-row window, including the current row and the two preceding rows.
+- The first two moving-average values are `NaN` because the default rolling calculation requires three observations.
+- The data is already in chronological order, so the calculations follow the intended date sequence.
+
+### Expected Results
+
+| Date       | Sales | Cumulative sales | 3-day moving average |
+| ---------- | ----: | ---------------: | -------------------: |
+| 2026-10-01 | 1,000 |            1,000 |                `NaN` |
+| 2026-10-02 | 1,500 |            2,500 |                `NaN` |
+| 2026-10-03 |   800 |            3,300 |             1,100.00 |
+| 2026-10-04 | 2,000 |            5,300 |             1,433.33 |
+| 2026-10-05 | 1,200 |            6,500 |             1,333.33 |
+| 2026-10-06 | 1,800 |            8,300 |             1,666.67 |
+| 2026-10-07 |   900 |            9,200 |             1,300.00 |
+
+This exercise connects Pandas cumulative and rolling calculations with SQL window functions such as `SUM() OVER (ORDER BY date)` and `AVG() OVER (ORDER BY date ROWS BETWEEN 2 PRECEDING AND CURRENT ROW)`.
+
+---
+
 ---
 
 # 📁 Project Structure
@@ -3049,6 +3118,7 @@ Current repository structure:
 ├── 35_PANDAS_date__time_analysis.py
 ├── 36_PANDAS_merge_two_dataframes.py
 ├── 37_PANDAS_customers_with_no_orders.py
+├── 38_PANDAS_running_total_and_moving_average.py
 └── README.md
 ```
 
@@ -3079,6 +3149,7 @@ As additional questions are completed, each solution will be added as a separate
 ├── 35_PANDAS_date__time_analysis.py
 ├── 36_PANDAS_merge_two_dataframes.py
 ├── 37_PANDAS_customers_with_no_orders.py
+├── 38_PANDAS_running_total_and_moving_average.py
 ├── ...
 ├── 40_pandas_mini_ecommerce_analysis.py
 └── README.md
@@ -3093,10 +3164,10 @@ The filenames above represent the intended progression; files should be added as
 | Section   | Questions | Completed | Remaining |
 | --------- | --------: | --------: | --------: |
 | NumPy     |      1–20 |        20 |         0 |
-| Pandas    |     21–40 |        17 |         3 |
-| **Total** |  **1–40** |    **37** |     **3** |
+| Pandas    |     21–40 |        18 |         2 |
+| **Total** |  **1–40** |    **38** |     **2** |
 
-**Overall progress: 37 / 40 completed (92.5%)**
+**Overall progress: 38 / 40 completed (95%)**
 
 ---
 
@@ -3248,10 +3319,11 @@ This repository tracks the implementation of those exercises as individual Pytho
 35 — Date/time analysis                  ✅
 36 — Merge two DataFrames                ✅
 37 — Find customers with no orders        ✅
+38 — Running total and moving average      ✅
 ```
 
 ### Next Exercise
 
-**38 — Running total and moving average**
+**39 — Customer analytics**
 
-The next task practises cumulative totals with `.cumsum()` and moving averages with `.rolling()`. Q24 — Sort data, Q36 — Merge two DataFrames, and Q37 — Find customers with no orders are completed.
+Q38 is complete: cumulative sales are calculated with `.cumsum()`, and the 3-day moving average uses `.rolling(window=3).mean()`. Q24 — Sort data, Q36 — Merge two DataFrames, and Q37 — Find customers with no orders are also completed.
