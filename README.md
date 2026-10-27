@@ -117,7 +117,7 @@ The Pandas section begins after the NumPy exercises and moves from DataFrame fun
 | 36  | Merge two DataFrames             | `merge()`, `groupby()`, `sum()`, SQL JOIN equivalent     | ✅ Completed |
 | 37  | Find customers with no orders    | `merge(how='left')`, `indicator=True`, Boolean filtering | ✅ Completed |
 | 38  | Running total and moving average | `.cumsum()`, `.rolling()`, `.mean()`                     | ✅ Completed |
-| 39  | Customer analytics               | Aggregation, ranking, customer metrics                   | ⬜ Pending   |
+| 39  | Customer analytics               | Named aggregation, customer metrics, ranking, filtering  | ✅ Completed |
 | 40  | Pandas mini e-commerce analysis  | KPIs, customers, products, geography, time, data quality | ⬜ Pending   |
 
 ---
@@ -3073,6 +3073,91 @@ This exercise connects Pandas cumulative and rolling calculations with SQL windo
 
 ---
 
+## 39 — Customer Analytics
+
+**File:**
+
+```text
+39_PANDAS_customer_analytics.py
+```
+
+### Problem
+
+Use customer order records to calculate total spending, average order value, number of orders, largest order, first and last order dates, spending rank, and customers whose total spending is above the average customer spending.
+
+### Concepts Practiced
+
+```text
+groupby()
+Named aggregation with .agg()
+sum(), mean(), count(), max(), min()
+reset_index()
+rank(ascending=False, method='min')
+Boolean filtering
+Customer-level summary metrics
+```
+
+### Solution
+
+```python
+import pandas as pd
+
+data = {
+    'customer_id': [101, 102, 101, 103, 102, 101, 104, 103, 104],
+    'order_date': pd.to_datetime([
+        '2026-01-01', '2026-01-02', '2026-01-05',
+        '2026-01-06', '2026-01-10', '2026-01-15',
+        '2026-01-20', '2026-01-22', '2026-01-25'
+    ]),
+    'amount': [150.00, 80.50, 45.00, 300.00, 120.00, 200.00, 50.00, 150.00, 75.00]
+}
+
+df = pd.DataFrame(data)
+
+customer_analytics = df.groupby('customer_id').agg(
+    total_spending=('amount', 'sum'),
+    average_order_value=('amount', 'mean'),
+    number_of_orders=('amount', 'count'),
+    largest_order=('amount', 'max'),
+    first_order_date=('order_date', 'min'),
+    last_order_date=('order_date', 'max')
+).reset_index()
+
+customer_analytics['spending_rank'] = customer_analytics['total_spending'].rank(
+    ascending=False, method='min'
+)
+
+overall_avg_spending = customer_analytics['total_spending'].mean()
+above_avg_customer = customer_analytics[
+    customer_analytics['total_spending'] > overall_avg_spending
+]
+
+print(customer_analytics)
+print("\nCustomers spending above the average:")
+print(above_avg_customer)
+```
+
+### What This Solution Demonstrates
+
+- `groupby('customer_id').agg(...)` creates one summary row per customer and calculates multiple metrics in a single operation.
+- Named aggregation assigns clear names to each output metric: total spending, average order value, order count, largest order, and first/last order dates.
+- `reset_index()` returns `customer_id` to a regular DataFrame column.
+- `.rank(ascending=False, method='min')` ranks customers from highest to lowest total spending.
+- The overall average is calculated from the customers' **total spending**, and Boolean filtering selects customers whose total is greater than that average.
+
+### Expected Results
+
+| Customer ID | Total spending | Average order value | Orders | Largest order | First order | Last order | Rank |
+| ----------: | -------------: | ------------------: | -----: | ------------: | ----------- | ---------- | ---: |
+|         101 |         395.00 |              131.67 |      3 |        200.00 | 2026-01-01  | 2026-01-15 |    2 |
+|         102 |         200.50 |              100.25 |      2 |        120.00 | 2026-01-02  | 2026-01-10 |    3 |
+|         103 |         450.00 |              225.00 |      2 |        300.00 | 2026-01-06  | 2026-01-22 |    1 |
+|         104 |         125.00 |               62.50 |      2 |         75.00 | 2026-01-20  | 2026-01-25 |    4 |
+
+The average of customer total spending is **292.625**. Customers **103** and **101** spend above this average.
+
+This exercise combines customer-level aggregation, ranking, date summaries, and business-rule filtering in a compact Data Analyst interview-style task.
+
 ---
 
 # 📁 Project Structure
@@ -3119,6 +3204,7 @@ Current repository structure:
 ├── 36_PANDAS_merge_two_dataframes.py
 ├── 37_PANDAS_customers_with_no_orders.py
 ├── 38_PANDAS_running_total_and_moving_average.py
+├── 39_PANDAS_customer_analytics.py
 └── README.md
 ```
 
@@ -3150,6 +3236,7 @@ As additional questions are completed, each solution will be added as a separate
 ├── 36_PANDAS_merge_two_dataframes.py
 ├── 37_PANDAS_customers_with_no_orders.py
 ├── 38_PANDAS_running_total_and_moving_average.py
+├── 39_PANDAS_customer_analytics.py
 ├── ...
 ├── 40_pandas_mini_ecommerce_analysis.py
 └── README.md
@@ -3164,10 +3251,10 @@ The filenames above represent the intended progression; files should be added as
 | Section   | Questions | Completed | Remaining |
 | --------- | --------: | --------: | --------: |
 | NumPy     |      1–20 |        20 |         0 |
-| Pandas    |     21–40 |        18 |         2 |
-| **Total** |  **1–40** |    **38** |     **2** |
+| Pandas    |     21–40 |        19 |         1 |
+| **Total** |  **1–40** |    **39** |     **1** |
 
-**Overall progress: 38 / 40 completed (95%)**
+**Overall progress: 39 / 40 completed (97.5%)**
 
 ---
 
@@ -3320,10 +3407,11 @@ This repository tracks the implementation of those exercises as individual Pytho
 36 — Merge two DataFrames                ✅
 37 — Find customers with no orders        ✅
 38 — Running total and moving average      ✅
+39 — Customer analytics                   ✅
 ```
 
 ### Next Exercise
 
-**39 — Customer analytics**
+**40 — Pandas mini e-commerce analysis**
 
-Q38 is complete: cumulative sales are calculated with `.cumsum()`, and the 3-day moving average uses `.rolling(window=3).mean()`. Q24 — Sort data, Q36 — Merge two DataFrames, and Q37 — Find customers with no orders are also completed.
+Q39 is complete: customer-level spending metrics, order counts and dates, spending ranks, and above-average customer filtering are implemented. Q24 — Sort data, Q36 — Merge two DataFrames, and Q37 — Find customers with no orders are also completed.
