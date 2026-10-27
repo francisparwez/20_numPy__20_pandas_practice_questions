@@ -115,7 +115,7 @@ The Pandas section begins after the NumPy exercises and moves from DataFrame fun
 | #   | Practice Problem                 | Main Concepts                                            | Status       |
 | --- | -------------------------------- | -------------------------------------------------------- | ------------ |
 | 36  | Merge two DataFrames             | `merge()`, `groupby()`, `sum()`, SQL JOIN equivalent     | ✅ Completed |
-| 37  | Find customers with no orders    | LEFT JOIN equivalent, `indicator=True`                   | ⬜ Pending   |
+| 37  | Find customers with no orders    | `merge(how='left')`, `indicator=True`, Boolean filtering | ✅ Completed |
 | 38  | Running total and moving average | `.cumsum()`, `.rolling()`                                | ⬜ Pending   |
 | 39  | Customer analytics               | Aggregation, ranking, customer metrics                   | ⬜ Pending   |
 | 40  | Pandas mini e-commerce analysis  | KPIs, customers, products, geography, time, data quality | ⬜ Pending   |
@@ -1981,7 +1981,7 @@ These first three Pandas exercises establish a workflow of creating a DataFrame,
 
 ---
 
-## 24 — Sort Data _(Pending)_
+## 24 — Sort Data
 
 **File:**
 
@@ -2028,7 +2028,7 @@ df.sort_values(
 - When sorting by multiple columns, the order of the columns in `by` determines the sorting priority.
 - Each item in `ascending` corresponds to the column in the same position in `by`. In the final task, departments are sorted alphabetically first, and salaries are sorted from highest to lowest within each department.
 
-**Status:** Pending — complete and verify the exercise before marking it as completed.
+**Status:** ✅ Completed — the sorting tasks are implemented using `sort_values()`.
 
 ---
 
@@ -2933,6 +2933,77 @@ This exercise connects Pandas `merge()`, `groupby()`, and `sum()` with the SQL w
 
 ---
 
+## 37 — Find Customers with No Orders
+
+**File:**
+
+```text
+37_PANDAS_customers_with_no_orders.py
+```
+
+### Problem
+
+Create customer and order DataFrames, perform a left join, and identify customers who do not have any matching orders.
+
+### Concepts Practiced
+
+```text
+pd.DataFrame()
+DataFrame.merge()
+how='left'
+indicator=True
+Boolean filtering
+DataFrame.loc
+SQL LEFT JOIN
+Unmatched-row detection
+```
+
+### Solution
+
+```python
+import pandas as pd
+
+# Customers DataFrame
+df1 = pd.DataFrame({
+    'customer_id': [101, 102, 103, 104, 105, 106],
+    'customer_name': ['Ali', 'Sara', 'Ahmed', 'Ayesha', 'Usman', 'Zain'],
+    'city': ['Karachi', 'Lahore', 'Islamabad', 'Karachi', 'Multan', 'Peshawar']
+})
+
+# Orders DataFrame
+df2 = pd.DataFrame({
+    'order_id': [1, 2, 3, 4, 5, 6, 7, 8],
+    'customer_id': [101, 102, 101, 103, 102, 104, 105, 101],
+    'amount': [5000, 3000, 2500, 4000, 1500, 6000, 2000, 1000]
+})
+
+df = df1.merge(df2, how='left', indicator=True)
+
+no_orders = df[df['_merge'] == 'left_only'].loc[
+    :, ['customer_id', 'customer_name', 'city']
+]
+
+print(f'Original:\n{df}\n')
+print(f'No Orders:\n{no_orders}\n')
+```
+
+### What This Solution Demonstrates
+
+- `df1.merge(df2, how='left', indicator=True)` keeps every customer and adds an `_merge` column describing whether each row matched.
+- `_merge == 'both'` indicates a matching customer/order row; `_merge == 'left_only'` identifies a customer without a matching order.
+- `df[df['_merge'] == 'left_only']` filters the merged DataFrame to customers with no orders.
+- `.loc[:, ['customer_id', 'customer_name', 'city']]` selects all remaining rows and only the customer detail columns required for the final result.
+
+### Expected Result
+
+| customer_id | customer_name | city     |
+| ----------: | ------------- | -------- |
+|         106 | Zain          | Peshawar |
+
+This exercise connects Pandas left merges and indicator-based filtering with the SQL pattern of a `LEFT JOIN` followed by a check for unmatched rows.
+
+---
+
 ---
 
 # 📁 Project Structure
@@ -2977,6 +3048,7 @@ Current repository structure:
 ├── 34_PANDAS_value_counts.py
 ├── 35_PANDAS_date__time_analysis.py
 ├── 36_PANDAS_merge_two_dataframes.py
+├── 37_PANDAS_customers_with_no_orders.py
 └── README.md
 ```
 
@@ -3006,6 +3078,7 @@ As additional questions are completed, each solution will be added as a separate
 ├── 34_PANDAS_value_counts.py
 ├── 35_PANDAS_date__time_analysis.py
 ├── 36_PANDAS_merge_two_dataframes.py
+├── 37_PANDAS_customers_with_no_orders.py
 ├── ...
 ├── 40_pandas_mini_ecommerce_analysis.py
 └── README.md
@@ -3020,10 +3093,10 @@ The filenames above represent the intended progression; files should be added as
 | Section   | Questions | Completed | Remaining |
 | --------- | --------: | --------: | --------: |
 | NumPy     |      1–20 |        20 |         0 |
-| Pandas    |     21–40 |        16 |         4 |
-| **Total** |  **1–40** |    **36** |     **4** |
+| Pandas    |     21–40 |        17 |         3 |
+| **Total** |  **1–40** |    **37** |     **3** |
 
-**Overall progress: 36 / 40 completed (90%)**
+**Overall progress: 37 / 40 completed (92.5%)**
 
 ---
 
@@ -3174,10 +3247,11 @@ This repository tracks the implementation of those exercises as individual Pytho
 34 — Value counts                        ✅
 35 — Date/time analysis                  ✅
 36 — Merge two DataFrames                ✅
+37 — Find customers with no orders        ✅
 ```
 
 ### Next Exercise
 
-**37 — Find customers with no orders**
+**38 — Running total and moving average**
 
-The next task practises identifying customers without matching orders using a left-join approach. Q24 — Sort data and Q36 — Merge two DataFrames are completed.
+The next task practises cumulative totals with `.cumsum()` and moving averages with `.rolling()`. Q24 — Sort data, Q36 — Merge two DataFrames, and Q37 — Find customers with no orders are completed.
